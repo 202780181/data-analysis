@@ -21,6 +21,12 @@ for (let i = 0; i < 7; i += 1) {
   });
 }
 
+// const callbackFunc =()=> {
+//   return (
+//     <div className={'test-callback'}></div>
+//   )
+// }
+
 const SalesCard = ({
   rangePickerValue,
   salesData,
