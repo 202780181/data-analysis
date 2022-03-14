@@ -1,5 +1,4 @@
 import {Space} from 'antd';
-import {QuestionCircleOutlined} from '@ant-design/icons';
 import React from 'react';
 import {useModel, SelectLang, setLocale} from 'umi';
 import Avatar from './AvatarDropdown';
@@ -46,21 +45,13 @@ const GlobalHeaderRight: React.FC = () => {
     <Space className={className}>
       <HeaderSearch
         className={`${styles.action} ${styles.search}`}
-        placeholder="站内搜索"
-        defaultValue="umi ui"
+        placeholder="检索内容"
+        defaultValue=""
         options={[]}
         // onSearch={value => {
         //   console.log('input', value);
         // }}
       />
-      <span
-        className={styles.action}
-        onClick={() => {
-          window.open('https://pro.ant.design/docs/getting-started');
-        }}
-      >
-        <QuestionCircleOutlined/>
-      </span>
       <NoticeIconView/>
       <Avatar menu/>
       <SelectLang

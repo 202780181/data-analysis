@@ -70,7 +70,7 @@ const Monitor: FC = () => {
                 min={0}
                 max={100}
                 forceFit
-                value={87}
+                value={57}
                 range={[0, 25, 50, 75, 100]}
                 statistic={{
                   visible: true,

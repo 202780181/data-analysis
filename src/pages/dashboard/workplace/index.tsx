@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Avatar, Card, Col, List, Skeleton, Row, Statistic } from 'antd';
+import { Avatar, Card, Col, List, Skeleton, Row, Statistic, Button } from 'antd';
 import { Radar } from '@ant-design/charts';
 
 import { Link, useRequest } from 'umi';
@@ -114,6 +114,28 @@ const Workplace: FC = () => {
 
   return (
     <PageContainer
+      tabList={
+      [
+        {
+          tab:'基本信息',
+          key:'base'
+        },
+        {
+          tab: '详细信息',
+          key: 'info',
+        }
+      ]
+      }
+      header={{
+        title: '工作台',
+      }}
+      extra={[
+        <Button key="3">操作1</Button>,
+        <Button key="2">操作2</Button>,
+        <Button key="1" type="primary">
+          操作3
+        </Button>,
+      ]}
       content={
         <PageHeaderContent
           currentUser={{
@@ -127,7 +149,11 @@ const Workplace: FC = () => {
           }}
         />
       }
+      // 额外内容区，位于 content 的右侧
       extraContent={<ExtraContent />}
+      onTabChange={
+        (index)=> console.log('当前下标：'+index)
+      }
     >
       <Row gutter={24}>
         <Col xl={16} lg={24} md={24} sm={24} xs={24}>
