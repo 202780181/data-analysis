@@ -12,5 +12,3 @@ function useLocale(locale = null) {
 }
 
 export default useLocale;
-
-``

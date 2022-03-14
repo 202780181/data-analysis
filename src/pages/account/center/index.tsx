@@ -39,7 +39,8 @@ const operationTabList = [
 ];
 
 const TagList: React.FC<{ tags: CurrentUser['tags'] }> = ({ tags }) => {
-  const ref = useRef<Input | null>(null);
+  // @ts-ignore
+  const ref = useRef<Input  | null>(null);
   const [newTags, setNewTags] = useState<TagType[]>([]);
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
