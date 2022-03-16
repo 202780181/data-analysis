@@ -36,4 +36,5 @@ const initPuppeteer = async () => {
   }
 };
 
+
 initPuppeteer();

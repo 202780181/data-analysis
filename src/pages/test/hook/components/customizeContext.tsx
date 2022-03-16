@@ -2,7 +2,7 @@ import {createContext} from "react";
 
 
 type defaultValue = {
-  count: number
+  count?: number
 }
 export default createContext<defaultValue>(
   {
