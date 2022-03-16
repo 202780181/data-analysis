@@ -49,4 +49,7 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+  'menu.test' : 'test Page',
+  'menu.test.hook' : 'hook Ribbon',
+  'menu.test.class' : 'class Ribbon',
 };
