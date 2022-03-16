@@ -14,6 +14,7 @@ _roadhog-api-doc
 .DS_Store
 npm-debug.log*
 yarn-error.log
+yarn-look.log
 
 /coverage
 .idea
