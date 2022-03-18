@@ -17,12 +17,14 @@ const dataSource = [
     name: '胡彦斌',
     age: 32,
     address: '西湖区湖底公园1号',
+    phone: '120'
   },
   {
     key: '2',
     name: '胡彦祖',
     age: 42,
     address: '西湖区湖底公园1号',
+    phone: '110'
   },
 ]
 const columns = [
@@ -41,6 +43,11 @@ const columns = [
     dataIndex: 'address',
     key: 'address',
   },
+  {
+    title:'手机号',
+    dataIndex: 'phone',
+    key: 'phone'
+  }
 ]
 
 const TestHookInterfacePage: React.FC<Greeting> = () => {
@@ -55,6 +62,7 @@ const TestHookInterfacePage: React.FC<Greeting> = () => {
   // }
 
   // const [fruit, setFruit] = useState('banana')
+
   useEffect(()=> {
     console.log('改变了:'+ count)
   }, [count])
@@ -64,9 +72,7 @@ const TestHookInterfacePage: React.FC<Greeting> = () => {
         <div className={styles.hookRoot} onClick={()=> setCount(count + 1)}>这是hook测试页面内容:{count}</div>
         <C.Provider value={{count}}>
           <TablePane/>
-          <Table dataSource={dataSource} columns={columns}>
-
-          </Table>
+          <Table dataSource={dataSource} columns={columns}/>
         </C.Provider>
       </Col>
     </Row>

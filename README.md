@@ -1,19 +1,22 @@
-# Ant Design Pro
+# 大数据可视化平台
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+基于ant.design pro 上层搭建的react数据可视化平台
 
-## Environment Prepare
+## 环境准备
+### 推荐使用 pnpm 管理项目依赖
 
-Install `node_modules`:
 
+pnpm 官网: https://www.pnpm.cn
+
+### 安装
 ```bash
-npm install
+ pnpm i
 ```
 
 or
 
 ```bash
-yarn
+npm i
 ```
 
 ## Provided Scripts
@@ -25,31 +28,31 @@ Scripts provided in `package.json`. It's safe to modify or add additional script
 ### Start project
 
 ```bash
-npm start
+pnpm start
 ```
 
 ### Build project
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Check code style
 
 ```bash
-npm run lint
+pnpm run lint
 ```
 
 You can also use script to auto fix some lint error:
 
 ```bash
-npm run lint:fix
+pnpm run lint:fix
 ```
 
 ### Test code
 
 ```bash
-npm test
+pnpm test
 ```
 
 ## More
