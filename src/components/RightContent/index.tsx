@@ -5,8 +5,10 @@ import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 import NoticeIconView from '../NoticeIcon';
-
+import SettingDrawer from '../SettingDrawer'
 export type SiderTheme = 'light' | 'dark';
+
+
 
 const GlobalHeaderRight: React.FC = () => {
   const {initialState} = useModel('@@initialState');
@@ -29,18 +31,20 @@ const GlobalHeaderRight: React.FC = () => {
       icon: '🇨🇳',
       title: '语言'
     },
-   {
-    lang: 'en-US',
+    {
+      lang: 'en-US',
       label: 'English',
       icon: '🇺🇸',
       title: 'Language'
-  }
+    }
   ]
+
   // 设置语言
   function handleClick(props: any) {
     setLocale(props.key, true)
     return true
   }
+
   return (
     <Space className={className}>
       <HeaderSearch
@@ -54,8 +58,9 @@ const GlobalHeaderRight: React.FC = () => {
       />
       <NoticeIconView/>
       <Avatar menu/>
+      <SettingDrawer/>
       <SelectLang
-        postLocalesData={()=> defaultLang}
+        postLocalesData={() => defaultLang}
         onItemClick={handleClick}
         reload
         className={styles.action}/>
