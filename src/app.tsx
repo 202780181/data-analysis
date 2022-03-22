@@ -22,6 +22,7 @@ export const initialStateConfig = {
  */
 export const request: RequestConfig = {
   timeout: 15000,
+  dataField: '',
   errorHandler,
   errorConfig: {
     adaptor:(resData) => {
