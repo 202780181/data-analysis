@@ -6,12 +6,12 @@ import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 import NoticeIconView from '../NoticeIcon';
 import SettingDrawer from '../SettingDrawer'
+
 export type SiderTheme = 'light' | 'dark';
 
 
-
 const GlobalHeaderRight: React.FC = () => {
-  const {initialState} = useModel('@@initialState');
+  const {initialState, setInitialState} = useModel('@@initialState');
 
   if (!initialState || !initialState.settings) {
     return null;
@@ -58,7 +58,20 @@ const GlobalHeaderRight: React.FC = () => {
       />
       <NoticeIconView/>
       <Avatar menu/>
-      <SettingDrawer/>
+      <SettingDrawer
+        disableUrlParams
+        enableDarkTheme
+        settings={initialState?.settings}
+        onSettingChange={
+          (settings => {
+            setInitialState((preInitialState) => ({
+              ...preInitialState,
+              settings,
+            })).then(() => {
+            });
+          })
+        }
+      />
       <SelectLang
         postLocalesData={() => defaultLang}
         onItemClick={handleClick}

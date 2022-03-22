@@ -1,8 +1,8 @@
 import React,{FC, useEffect, useState, useRef} from 'react';
-import {createFromIconfontCN, NotificationOutlined, CopyOutlined} from '@ant-design/icons';
+import {createFromIconfontCN} from '@ant-design/icons';
 import styles from './index.less';
 import classNames from "classnames";
-import {Drawer, ConfigProvider, Divider, List, Switch, Alert, Button, message} from 'antd';
+import {Drawer, ConfigProvider, Divider, List, Switch} from 'antd';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import type {ProSettings} from './defaultSettings';
 import defaultSettings from './defaultSettings';
@@ -15,7 +15,6 @@ import {disable as darkreaderDisable, enable as darkreaderEnable} from '@umijs/s
 import ThemeColor from './ThemeColor';
 import LayoutSetting, {renderLayoutSettingItem} from './LayoutChange'
 import RegionalSetting from './RegionalChange';
-import omit from 'omit.js';
 
 
 
@@ -166,18 +165,6 @@ const getParamsFromUrl = (
   }
 }
 
-const genCopySettingJson = (settingState: MergerSettingsType<ProSettings>) =>
-  JSON.stringify(omit(
-    {
-      ...settingState,
-      primaryColor: settingState.primaryColor,
-    },
-    ['colorWeak'],
-  ),
-  null,
-  2,
-)
-
 const SettingDrawer: FC<SettingDrawerProps> = (props) => {
   const {
     defaultSettings: propsDefaultSettings = undefined,
@@ -199,7 +186,7 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
     onSettingChange,
     prefixCls = 'ant-pro',
     disableUrlParams = true,
-    themeOnly,
+    themeOnly = true,
     pathname = window.location.pathname,
   } = props;
   const firstRender = useRef<boolean>(true);
@@ -452,36 +439,6 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
                 />
               </Body>
               {hideHintAlert && hideCopyButton ? null : <Divider />}
-
-              {hideHintAlert? null : (
-                <Alert
-                  type="warning"
-                  message={formatMessage({
-                    id: 'app.setting.production.hint',
-                  })}
-                  icon={<NotificationOutlined />}
-                  showIcon
-                  style={{ marginBottom: 16 }}
-                />
-              )}
-
-              {hideCopyButton ? null : (
-                <Button
-                  block
-                  icon={<CopyOutlined />}
-                  style={{ marginBottom: 24 }}
-                  onClick={async () => {
-                    try {
-                      await navigator.clipboard.writeText(genCopySettingJson(settingState));
-                      message.success(formatMessage({ id: 'app.setting.copyinfo' }));
-                    } catch (error) {
-                      // console.log(error);
-                    }
-                  }}
-                >
-                  {formatMessage({ id: 'app.setting.copy' })}
-                </Button>
-              )}
             </>
           )}
         </div>
