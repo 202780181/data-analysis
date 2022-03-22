@@ -67,8 +67,7 @@ const GlobalHeaderRight: React.FC = () => {
             setInitialState((preInitialState) => ({
               ...preInitialState,
               settings,
-            })).then(() => {
-            });
+            }));
           })
         }
       />
