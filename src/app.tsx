@@ -7,12 +7,34 @@ import {history} from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
-
+import {RequestConfig} from 'umi';
+import {RequestInterceptor, ResponseInterceptors, errorHandler} from '@/middlewares/httpInterceptors'
 const loginPath = '/user/login';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <PageLoading/>,
+};
+
+
+/**
+ * http 请求设置
+ */
+export const request: RequestConfig = {
+  timeout: 1000,
+  errorHandler,
+  errorConfig: {
+    adaptor:(resData) => {
+      return {
+        ...resData,
+        success: resData.ok,
+        errorMessage: resData.message,
+      }
+    }
+  },
+  middlewares: [],
+  requestInterceptors: [RequestInterceptor],
+  responseInterceptors: [ResponseInterceptors]
 };
 
 /**
