@@ -1,7 +1,7 @@
 import {message} from 'antd';
 
 //拦截器-请求前拦截
-const RequestInterceptor = (options: any) => {
+const RequestInterceptor = (url: string, options: any) => {
   const o = options;
   //如果不是登陆页 headers里添加 username
   //headers 里面的内容是和后端协商好的
@@ -32,8 +32,8 @@ const ResponseInterceptors = async (response: any) => {
 
 
 // 错误请求
-const errorHandler = () => {
-  console.log('error in app.tsx ---->')
+const errorHandler = (err: Error) => {
+  console.error(err)
 }
 
 export {

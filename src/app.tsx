@@ -21,7 +21,7 @@ export const initialStateConfig = {
  * http 请求设置
  */
 export const request: RequestConfig = {
-  timeout: 1000,
+  timeout: 15000,
   errorHandler,
   errorConfig: {
     adaptor:(resData) => {
