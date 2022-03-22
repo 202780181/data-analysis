@@ -6,7 +6,8 @@ import {Drawer, ConfigProvider, Divider, List, Switch} from 'antd';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import type {ProSettings} from './defaultSettings';
 import defaultSettings from './defaultSettings';
-import {gLocaleObject, getLanguage} from '@/locales';
+import {getLanguage} from '@/locales';
+import {getFormatMessage} from '@/utils/utils';
 import BlockCheckbox from './BlockCheckbox';
 import {isBrowser} from "@ant-design/pro-utils";
 import {useUrlSearchParams} from '@umijs/use-params';
@@ -74,14 +75,6 @@ const Body: React.FC<BodyProps> = ({children, prefixCls, title}) => (
     {children}
   </div>
 );
-
-export const getFormatMessage = (): ((data: { id: string; defaultMessage?: string }) => string) => {
-  const formatMessage = ({id}: { id: string; defaultMessage?: string }): string => {
-    const locales = gLocaleObject();
-    return locales[id];
-  }
-  return formatMessage;
-}
 
 const updateTheme = async (dark: boolean, color?: string) => {
   if (typeof window === 'undefined') return;

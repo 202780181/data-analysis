@@ -1,3 +1,4 @@
+import {gLocaleObject} from "@/locales";
 
 const themeConfig = {
   daybreak: '#1890ff',
@@ -15,10 +16,21 @@ export function genStringToTheme(val?: string): string {
 }
 
 /**
+ * 获取语言译文
+ */
+export const getFormatMessage = (): ((data: { id: string; defaultMessage?: string }) => string) => {
+  const formatMessage = ({id}: { id: string; defaultMessage?: string }): string => {
+    const locales = gLocaleObject();
+    return locales[id];
+  }
+  return formatMessage;
+}
+
+/**
  *
  * @param rest
  */
-const merge =<T>(...rest: any[]): T => {
+export  const merge =<T>(...rest: any[]): T => {
   const obj = {};
   const il = rest.length;
   let key;
@@ -47,5 +59,3 @@ const merge =<T>(...rest: any[]): T => {
   }
   return obj as T;
 }
-
-export { merge };

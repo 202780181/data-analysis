@@ -2,7 +2,7 @@ import React, {FC} from 'react'
 import { List, Tooltip, Select, Switch } from 'antd';
 import type { ProSettings } from './defaultSettings';
 import defaultSettings from './defaultSettings';
-import { getFormatMessage } from './index';
+import { getFormatMessage } from '@/utils/utils';
 import type { SettingItemProps } from './index';
 
 export const renderLayoutSettingItem=(item:SettingItemProps)=> {
