@@ -3,7 +3,6 @@ import { defineConfig } from 'umi';
 import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-import routes from "./routes";
 
 const { REACT_APP_ENV } = process.env;
 
@@ -34,7 +33,7 @@ export default defineConfig({
     ie: 11,
   },
   // umi routes: https://umijs.org/docs/routing
-  routes: routes.routes,
+  // routes: routes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     'root-entry-name': 'variable',

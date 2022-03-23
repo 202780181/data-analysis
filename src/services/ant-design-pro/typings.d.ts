@@ -98,4 +98,9 @@ declare namespace API {
     description?: string;
     type?: NoticeIconItemType;
   };
+
+  /** 菜单泛型 **/
+  type menuParams = {
+
+  }
 }
