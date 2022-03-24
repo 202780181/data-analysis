@@ -1,22 +1,13 @@
 # 大数据可视化平台
 
-基于ant.design pro 上层搭建的react数据可视化平台
+基于 ant.design pro 上层搭建的 react 数据可视化平台
 
 ## 环境准备
-### 推荐使用 pnpm 管理项目依赖
-
-
-pnpm 官网: https://www.pnpm.cn
 
 ### 安装
-```bash
- pnpm i
-```
-
-or
 
 ```bash
-npm i
+npm install
 ```
 
 ## Provided Scripts
