@@ -7,16 +7,17 @@ const Settings: LayoutSettings & {
   navTheme: 'light',
   // 拂晓蓝
   primaryColor: '#1890ff',
-  layout: 'mix',
+  layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
+  splitMenus: false,
+  headerHeight: 48,
   title: '数据可视化平台',
   pwa: false,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
-
 };
 
 export default Settings;

@@ -66,7 +66,7 @@ export type PureSettings = {
 export type ProSettings = PureSettings & RenderSetting;
 
 const defaultSettings: ProSettings = {
-  navTheme: 'dark',
+  navTheme: 'light',
   layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,

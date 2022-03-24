@@ -1,23 +1,21 @@
-import React,{FC, useEffect, useState, useRef} from 'react';
-import {createFromIconfontCN} from '@ant-design/icons';
+import React, { FC, useEffect, useState, useRef } from 'react';
+import { createFromIconfontCN } from '@ant-design/icons';
 import styles from './index.less';
-import classNames from "classnames";
-import {Drawer, ConfigProvider, Divider, List, Switch} from 'antd';
+import classNames from 'classnames';
+import { Drawer, ConfigProvider, Divider, List, Switch } from 'antd';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
-import type {ProSettings} from './defaultSettings';
-import defaultSettings from './defaultSettings';
-import {getLanguage} from '@/locales';
-import {getFormatMessage} from '@/utils/utils';
+import type { ProSettings } from './defaultSettings';
+import defaultSettings from '../../../config/defaultSettings';
+import { getLanguage } from '@/locales';
+import { getFormatMessage } from '@/utils/utils';
 import BlockCheckbox from './BlockCheckbox';
-import {isBrowser} from "@ant-design/pro-utils";
-import {useUrlSearchParams} from '@umijs/use-params';
-import {genStringToTheme, merge} from '@/utils/utils';
-import {disable as darkreaderDisable, enable as darkreaderEnable} from '@umijs/ssr-darkreader';
+import { isBrowser } from '@ant-design/pro-utils';
+import { useUrlSearchParams } from '@umijs/use-params';
+import { genStringToTheme, merge } from '@/utils/utils';
+import { disable as darkreaderDisable, enable as darkreaderEnable } from '@umijs/ssr-darkreader';
 import ThemeColor from './ThemeColor';
-import LayoutSetting, {renderLayoutSettingItem} from './LayoutChange'
+import LayoutSetting, { renderLayoutSettingItem } from './LayoutChange';
 import RegionalSetting from './RegionalChange';
-
-
 
 type BodyProps = {
   title: string;
@@ -55,7 +53,7 @@ export type SettingDrawerProps = {
   themeOnly?: boolean;
 };
 
-const getDifferentSetting =(state: Partial<ProSettings>): Record<string, any> => {
+const getDifferentSetting = (state: Partial<ProSettings>): Record<string, any> => {
   const stateObj: Partial<ProSettings> = {};
   Object.keys(state).forEach((key) => {
     if (state[key] !== defaultSettings[key] && key !== 'collapse') {
@@ -67,10 +65,10 @@ const getDifferentSetting =(state: Partial<ProSettings>): Record<string, any> =>
   });
   stateObj.menu = undefined;
   return stateObj;
-}
+};
 
-const Body: React.FC<BodyProps> = ({children, prefixCls, title}) => (
-  <div style={{marginBottom: 24}}>
+const Body: React.FC<BodyProps> = ({ children, prefixCls, title }) => (
+  <div style={{ marginBottom: 24 }}>
     <h3 className={`${prefixCls}-drawer-title`}>{title}</h3>
     {children}
   </div>
@@ -83,7 +81,7 @@ const updateTheme = async (dark: boolean, color?: string) => {
   if (!ConfigProvider.config) return;
   ConfigProvider.config({
     theme: {
-      primaryColor: genStringToTheme(color) || '#1890ff'
+      primaryColor: genStringToTheme(color) || '#1890ff',
     },
   });
 
@@ -91,23 +89,22 @@ const updateTheme = async (dark: boolean, color?: string) => {
     const defaultTheme = {
       brightness: 100,
       contrast: 90,
-      sepia: 10
-    }
+      sepia: 10,
+    };
     const defaultFixes = {
       invert: [],
       css: '',
       ignoreInlineStyle: ['.react-switch-handle'],
       ignoreImageAnalysis: [],
       disableStyleSheetsProxy: true,
-    }
+    };
     if (window.MutationObserver) {
-      darkreaderEnable(defaultTheme, defaultFixes)
+      darkreaderEnable(defaultTheme, defaultFixes);
     } else {
       if (window.MutationObserver) darkreaderDisable();
     }
   }
-}
-
+};
 
 /**
  * 初始化的时候需要做的工作
@@ -128,22 +125,22 @@ const initState = (
         replaceSetting[key] = genStringToTheme(urlParams[key]);
         return;
       }
-      replaceSetting[key] = urlParams[key]
+      replaceSetting[key] = urlParams[key];
     }
   });
   const newSettings: MergerSettingsType<ProSettings> = merge({}, settings, replaceSetting);
-  delete newSettings.menu
-  delete newSettings.title
-  delete newSettings.iconfontUrl
+  delete newSettings.menu;
+  delete newSettings.title;
+  delete newSettings.iconfontUrl;
 
   // 同步数据到外部
-  onSettingChange?.(newSettings)
+  onSettingChange?.(newSettings);
 
   // 如果 url 中设置主题，进行一次加载。
   if (defaultSettings.navTheme !== urlParams.navTheme && urlParams.navTheme) {
-    updateTheme(settings.navTheme === 'realDark', urlParams.primaryColor)
+    updateTheme(settings.navTheme === 'realDark', urlParams.primaryColor);
   }
-}
+};
 
 const getParamsFromUrl = (
   urlParams: Record<string, any>,
@@ -155,8 +152,8 @@ const getParamsFromUrl = (
     ...defaultSettings,
     ...(settings || {}),
     ...urlParams,
-  }
-}
+  };
+};
 
 const SettingDrawer: FC<SettingDrawerProps> = (props) => {
   const {
@@ -167,14 +164,14 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
     hideHintAlert,
     hideCopyButton,
     colorList = [
-      {key: 'daybreak', color: '#1890ff'},
-      {key: 'dust', color: '#F5222D'},
-      {key: 'volcano', color: '#FA541C'},
-      {key: 'sunset', color: '#FAAD14'},
-      {key: 'cyan', color: '#13C2C2'},
-      {key: 'green', color: '#52C41A'},
-      {key: 'geekblue', color: '#2F54EB'},
-      {key: 'purple', color: '#722ED1'},
+      { key: 'daybreak', color: '#1890ff' },
+      { key: 'dust', color: '#F5222D' },
+      { key: 'volcano', color: '#FA541C' },
+      { key: 'sunset', color: '#FAAD14' },
+      { key: 'cyan', color: '#13C2C2' },
+      { key: 'green', color: '#52C41A' },
+      { key: 'geekblue', color: '#2F54EB' },
+      { key: 'purple', color: '#722ED1' },
     ],
     onSettingChange,
     prefixCls = 'ant-pro',
@@ -221,16 +218,15 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
     initState(getParamsFromUrl(urlParams, propsSettings), settingState, setSettingState);
     window.document.addEventListener('languagechange', onLanguageChange, {
       passive: true,
-    })
+    });
 
     return () => window.document.removeEventListener('languagechange', onLanguageChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
-  useEffect(()=> {
-    updateTheme(settingState.navTheme === 'realDark', settingState.primaryColor)
-  },[settingState.primaryColor, settingState.navTheme])
-
+  useEffect(() => {
+    updateTheme(settingState.navTheme === 'realDark', settingState.primaryColor);
+  }, [settingState.primaryColor, settingState.navTheme]);
 
   /**
    * 修改设置
@@ -272,14 +268,14 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
     delete nextState.logo;
     delete nextState.pwa;
 
-    setSettingState({...settingState, ...nextState})
+    setSettingState({ ...settingState, ...nextState });
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     /** 如果不是浏览器 都没有必要做了 */
     if (!isBrowser()) return;
-    if(disableUrlParams) return;
-    if(firstRender.current) {
+    if (disableUrlParams) return;
+    if (firstRender.current) {
       firstRender.current = false;
       return;
     }
@@ -296,15 +292,17 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
     delete diffParams.pwa;
 
     setUrlParams(diffParams);
-
-  }, [setUrlParams, settingState, urlParams, pathname, disableUrlParams])
-
+  }, [setUrlParams, settingState, urlParams, pathname, disableUrlParams]);
 
   const baseClassName = `${prefixCls}-setting`;
   const formatMessage = getFormatMessage();
   return (
-    <div className={classNames(className, styles.action)} style={{fontSize: '18px'}} onClick={() => setShow(!show)}>
-      <SettingIcon type="icon-shezhi"/>
+    <div
+      className={classNames(className, styles.action)}
+      style={{ fontSize: '18px' }}
+      onClick={() => setShow(!show)}
+    >
+      <SettingIcon type="icon-shezhi" />
       <Drawer
         visible={show}
         width={300}
@@ -314,12 +312,13 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
         getContainer={getContainer}
       >
         <div className={`${baseClassName}-drawer-content`}>
-          <Body title={
-            formatMessage({
+          <Body
+            title={formatMessage({
               id: 'app.setting.pagestyle',
               defaultMessage: 'Page style setting',
             })}
-                prefixCls={baseClassName}>
+            prefixCls={baseClassName}
+          >
             <BlockCheckbox
               configType="theme"
               key="navTheme"
@@ -346,7 +345,7 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
                     id: 'app.setting.pagestyle.realdark',
                     defaultMessage: '暗色菜单风格',
                   }),
-                }
+                },
               ]}
               prefixCls={baseClassName}
             />
@@ -437,7 +436,7 @@ const SettingDrawer: FC<SettingDrawerProps> = (props) => {
         </div>
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default SettingDrawer
+export default SettingDrawer;
