@@ -1,4 +1,5 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
+import type { MenuDataItem } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
@@ -6,11 +7,24 @@ import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { RequestConfig } from 'umi';
+import routers from '@/routers';
 import {
   RequestInterceptor,
   ResponseInterceptors,
   errorHandler,
 } from '@/middlewares/httpInterceptors';
+
+import {
+  DashboardOutlined,
+  FormOutlined,
+  TableOutlined,
+  ProfileOutlined,
+  CheckCircleOutlined,
+  WarningOutlined,
+  UserOutlined,
+  HighlightOutlined,
+} from '@ant-design/icons';
+
 const loginPath = '/user/login';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -71,6 +85,25 @@ export async function getInitialState(): Promise<{
   };
 }
 
+// 服务端获取menu, icon 必须映射使用
+const IconMap = {
+  dashboard: <DashboardOutlined />,
+  form: <FormOutlined />,
+  table: <TableOutlined />,
+  profile: <ProfileOutlined />,
+  CheckCircleOutlined: <CheckCircleOutlined />,
+  warning: <WarningOutlined />,
+  user: <UserOutlined />,
+  highlight: <HighlightOutlined />,
+};
+
+const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
+  menus.map(({ icon, routes, ...item }) => ({
+    ...item,
+    icon: icon && IconMap[icon as string],
+    routes: routes && loopMenuItem(routes),
+  }));
+
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
@@ -90,6 +123,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     links: [],
     menuHeaderRender: undefined,
+    // 从服务端请求获取menu
+    menu: {
+      request: async () => loopMenuItem(routers),
+    },
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     // 右侧全局设置菜单<自定义设置已覆盖>

@@ -1,10 +1,7 @@
-import {FC} from 'react'
+import { FC } from 'react';
 
-const User:FC = () => {
-  return (
-    <div>用户管理</div>
-  )
-}
+const User: FC = () => {
+  return <div>用户管理模板</div>;
+};
 
-
-export default User
+export default User;
