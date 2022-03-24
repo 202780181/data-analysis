@@ -1,5 +1,6 @@
-import type { BasicLayoutProps, Settings as LayoutSettings } from '@ant-design/pro-layout';
+import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import type { MenuDataItem } from '@ant-design/pro-layout';
+import type { RunTimeLayoutConfig } from 'umi';
 import { PageLoading } from '@ant-design/pro-layout';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
@@ -104,26 +105,49 @@ const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
   }));
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
-export const layout = ({
-  initialState,
-}: {
-  initialState: { settings?: LayoutSettings; currentUser?: API.CurrentUser };
-}): BasicLayoutProps => {
+// BasicLayoutProps 运行时配置非常灵活，但是相应的性能可能比较差，
+// 除了下面的插件支持的特有配置外，运行时配置支持所有的构建时配置并透传给 @ant-design/pro-layout。
+// 官方url https://umijs.org/zh-CN/plugins/plugin-layout#layout
+export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
     rightContentRender: () => <RightContent />,
-    footerRender: () => <Footer />,
+    disableContentMargin: false,
     menuDataRender: () => {
       return loopMenuItem(routers);
     },
+    footerRender: () => <Footer />,
     onPageChange: () => {
-      const { currentUser } = initialState;
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!currentUser && location.pathname !== '/user/login') {
-        history.push('/user/login');
+      if (!initialState?.currentUser && location.pathname !== loginPath) {
+        history.push(loginPath);
       }
     },
+    links: [],
     menuHeaderRender: undefined,
+    // 自定义 403 页面
+    // unAccessible: <div>unAccessible</div>,
+    // 右侧全局设置菜单<自定义设置已覆盖>
+    // childrenRender: (children, props) => {
+    //   return (
+    //     <>
+    //       {children}
+    //       {!props.location?.pathname?.includes('/login') && (
+    //         <SettingDrawer
+    //           disableUrlParams
+    //           enableDarkTheme
+    //           settings={initialState?.settings}
+    //           onSettingChange={(settings) => {
+    //             setInitialState((preInitialState) => ({
+    //               ...preInitialState,
+    //               settings,
+    //             })).then(() => {});
+    //           }}
+    //         />
+    //       )}
+    //     </>
+    //   );
+    // },
     ...initialState?.settings,
   };
 };
