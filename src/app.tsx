@@ -1,7 +1,6 @@
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
+import type { BasicLayoutProps, Settings as LayoutSettings } from '@ant-design/pro-layout';
 import type { MenuDataItem } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import type { RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
@@ -105,51 +104,26 @@ const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
   }));
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
-export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+export const layout = ({
+  initialState,
+}: {
+  initialState: { settings?: LayoutSettings; currentUser?: API.CurrentUser };
+}): BasicLayoutProps => {
   return {
     rightContentRender: () => <RightContent />,
-    disableContentMargin: false,
-    // 水印API
-    // waterMarkProps: {
-    //   content: initialState?.currentUser?.name,
-    // },
     footerRender: () => <Footer />,
+    menuDataRender: () => {
+      return loopMenuItem(routers);
+    },
     onPageChange: () => {
+      const { currentUser } = initialState;
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
+      if (!currentUser && location.pathname !== '/user/login') {
+        history.push('/user/login');
       }
     },
-    links: [],
     menuHeaderRender: undefined,
-    // 从服务端请求获取menu
-    menu: {
-      request: async () => loopMenuItem(routers),
-    },
-    // 自定义 403 页面
-    // unAccessible: <div>unAccessible</div>,
-    // 右侧全局设置菜单<自定义设置已覆盖>
-    // childrenRender: (children, props) => {
-    //   return (
-    //     <>
-    //       {children}
-    //       {!props.location?.pathname?.includes('/login') && (
-    //         <SettingDrawer
-    //           disableUrlParams
-    //           enableDarkTheme
-    //           settings={initialState?.settings}
-    //           onSettingChange={(settings) => {
-    //             setInitialState((preInitialState) => ({
-    //               ...preInitialState,
-    //               settings,
-    //             })).then(() => {});
-    //           }}
-    //         />
-    //       )}
-    //     </>
-    //   );
-    // },
     ...initialState?.settings,
   };
 };
