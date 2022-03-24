@@ -274,29 +274,6 @@
     ],
   },
   {
-    name: 'test',
-    icon: 'bug',
-    path: '/test',
-    routes: [
-      {
-        path: '/test',
-        redirect: '/test/hook',
-      },
-      {
-        name: 'hook',
-        icon: 'smile',
-        path: '/test/hook',
-        component: './test/hook',
-      },
-      {
-        name: 'class',
-        icon: 'smile',
-        path: '/test/class',
-        component: './test/class',
-      },
-    ],
-  },
-  {
     path: '/',
     redirect: '/dashboard/analysis',
   },
