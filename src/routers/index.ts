@@ -274,4 +274,29 @@ export default [
   {
     component: '404',
   },
+  {
+    icon: 'bulbOutlined',
+    name: 'testMenu',
+    path: '/newPage',
+    routes: [
+      {
+        path: '/newPage',
+        redirect: '/testList/newPage',
+      },
+      {
+        name: 'chart',
+        icon: 'smile',
+        path: '/testList/newPage',
+        // // 不展示顶栏
+        // headerRender: false,
+        // // 不展示页脚
+        // footerRender: false,
+        // // 不展示菜单
+        // menuRender: false,
+        // // 不展示菜单顶栏
+        // menuHeaderRender: false,
+
+      },
+    ],
+  },
 ];

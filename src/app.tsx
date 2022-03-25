@@ -23,7 +23,12 @@ import {
   WarningOutlined,
   UserOutlined,
   HighlightOutlined,
+  BulbOutlined
 } from '@ant-design/icons';
+import TagView from '@/components/TagView';
+import EventEmitter from '@/utils/eventEmitter';
+
+
 
 const loginPath = '/user/login';
 
@@ -95,6 +100,7 @@ const IconMap = {
   warning: <WarningOutlined />,
   user: <UserOutlined />,
   highlight: <HighlightOutlined />,
+  bulbOutlined: <BulbOutlined />
 };
 
 const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
@@ -110,7 +116,7 @@ const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
 // 官方url https://umijs.org/zh-CN/plugins/plugin-layout#layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
-    rightContentRender: () => <RightContent />,
+    rightContentRender: () => <TagView />,
     disableContentMargin: false,
     menuDataRender: () => {
       return loopMenuItem(routers);
@@ -121,6 +127,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);
+      }else {
+        EventEmitter.emit('routerChange', location);
       }
     },
     links: [],
