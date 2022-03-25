@@ -1,4 +1,3 @@
-import React from 'react';
 import RightContent from '../RightContent';
 import TagsView from './tagsView';
 import styles from './index.less';

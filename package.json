@@ -57,6 +57,7 @@
     "@antv/l7": "^2.3.7",
     "@antv/l7-maps": "^2.3.7",
     "@antv/l7-react": "^2.1.9",
+    "@types/react-cookies": "^0.1.0",
     "@umijs/route-utils": "^1.0.36",
     "ahooks": "^2.0.0",
     "antd": "^4.14.0",
@@ -89,6 +90,7 @@
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.144",
     "@types/react": "^17.0.0",
+    "@types/react-custom-scrollbars": "^4.0.10",
     "@types/react-dom": "^17.0.0",
     "@types/react-helmet": "^6.1.0",
     "@umijs/fabric": "^2.6.2",
@@ -113,6 +115,7 @@
     "mockjs": "^1.0.1-beta3",
     "prettier": "^2.3.2",
     "puppeteer-core": "^8.0.0",
+    "react-cookies": "^0.1.1",
     "stylelint": "^13.0.0",
     "typescript": "^4.2.2"
   },

@@ -3,11 +3,12 @@ import type { MenuDataItem } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from 'umi';
 import { PageLoading } from '@ant-design/pro-layout';
 import { history } from 'umi';
-import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { RequestConfig } from 'umi';
 import routers from '@/routers';
+import NoPermission from '@/pages/exception/403';
+
 import {
   RequestInterceptor,
   ResponseInterceptors,
@@ -23,12 +24,10 @@ import {
   WarningOutlined,
   UserOutlined,
   HighlightOutlined,
-  BulbOutlined
+  BulbOutlined,
 } from '@ant-design/icons';
 import TagView from '@/components/TagView';
 import EventEmitter from '@/utils/eventEmitter';
-
-
 
 const loginPath = '/user/login';
 
@@ -100,7 +99,7 @@ const IconMap = {
   warning: <WarningOutlined />,
   user: <UserOutlined />,
   highlight: <HighlightOutlined />,
-  bulbOutlined: <BulbOutlined />
+  bulbOutlined: <BulbOutlined />,
 };
 
 const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
@@ -127,14 +126,17 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);
-      }else {
+      } else {
         EventEmitter.emit('routerChange', location);
+      }
+      if (initialState?.currentUser && location.pathname === '/') {
+        history.push('/home');
       }
     },
     links: [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
-    // unAccessible: <div>unAccessible</div>,
+    unAccessible: <NoPermission />,
     // 右侧全局设置菜单<自定义设置已覆盖>
     // childrenRender: (children, props) => {
     //   return (

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-// @ts-ignore
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { useIntl, history } from 'umi';
 import EventEmitter from '@/utils/eventEmitter';

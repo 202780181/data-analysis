@@ -19,162 +19,23 @@ export default [
         redirect: '/user/login',
       },
       {
-        name: 'register-result',
-        icon: 'smile',
-        path: '/user/register-result',
-      },
-      {
-        name: 'register',
-        icon: 'smile',
-        path: '/user/register',
-      },
-      {
         component: '404',
       },
     ],
   },
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    icon: 'dashboard',
+    path: '/',
+    name: 'home',
+    icon: 'home',
     routes: [
       {
-        path: '/dashboard',
-        redirect: '/dashboard/analysis',
+        path: '/',
+        redirect: '/home',
       },
       {
-        name: 'analysis',
-        icon: 'smile',
-        path: '/dashboard/analysis',
-      },
-      {
-        name: 'monitor',
-        icon: 'smile',
-        path: '/dashboard/monitor',
-      },
-      {
-        name: 'workplace',
-        icon: 'smile',
-        path: '/dashboard/workplace',
-      },
-    ],
-  },
-  {
-    path: '/form',
-    icon: 'form',
-    name: 'form',
-    routes: [
-      {
-        path: '/form',
-        redirect: '/form/basic-form',
-      },
-      {
-        name: 'basic-form',
-        icon: 'smile',
-        path: '/form/basic-form',
-      },
-      {
-        name: 'step-form',
-        icon: 'smile',
-        path: '/form/step-form',
-      },
-      {
-        name: 'advanced-form',
-        icon: 'smile',
-        path: '/form/advanced-form',
-      },
-    ],
-  },
-  {
-    path: '/list',
-    icon: 'table',
-    name: 'list',
-    routes: [
-      {
-        path: '/list/search',
-        name: 'search-list',
-        routes: [
-          {
-            path: '/list/search',
-            redirect: '/list/search/articles',
-          },
-          {
-            name: 'articles',
-            icon: 'smile',
-            path: '/list/search/articles',
-          },
-          {
-            name: 'projects',
-            icon: 'smile',
-            path: '/list/search/projects',
-          },
-          {
-            name: 'applications',
-            icon: 'smile',
-            path: '/list/search/applications',
-          },
-        ],
-      },
-      {
-        path: '/list',
-        redirect: '/list/table-list',
-      },
-      {
-        name: 'table-list',
-        icon: 'smile',
-        path: '/list/table-list',
-      },
-      {
-        name: 'basic-list',
-        icon: 'smile',
-        path: '/list/basic-list',
-      },
-      {
-        name: 'card-list',
-        icon: 'smile',
-        path: '/list/card-list',
-      },
-    ],
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    icon: 'profile',
-    routes: [
-      {
-        path: '/profile',
-        redirect: '/profile/basic',
-      },
-      {
-        name: 'basic',
-        icon: 'smile',
-        path: '/profile/basic',
-      },
-      {
-        name: 'advanced',
-        icon: 'smile',
-        path: '/profile/advanced',
-      },
-    ],
-  },
-  {
-    name: 'result',
-    icon: 'CheckCircleOutlined',
-    path: '/result',
-    routes: [
-      {
-        path: '/result',
-        redirect: '/result/success',
-      },
-      {
-        name: 'success',
-        icon: 'smile',
-        path: '/result/success',
-      },
-      {
-        name: 'fail',
-        icon: 'smile',
-        path: '/result/fail',
+        name: 'home',
+        icon: 'home',
+        path: '/home',
       },
     ],
   },
@@ -182,6 +43,7 @@ export default [
     name: 'exception',
     icon: 'warning',
     path: '/exception',
+    hideInMenu: true,
     routes: [
       {
         path: '/exception',
@@ -226,32 +88,6 @@ export default [
     ],
   },
   {
-    name: 'editor',
-    icon: 'highlight',
-    path: '/editor',
-    routes: [
-      {
-        path: '/editor',
-        redirect: '/editor/flow',
-      },
-      {
-        name: 'flow',
-        icon: 'smile',
-        path: '/editor/flow',
-      },
-      {
-        name: 'mind',
-        icon: 'smile',
-        path: '/editor/mind',
-      },
-      {
-        name: 'koni',
-        icon: 'smile',
-        path: '/editor/koni',
-      },
-    ],
-  },
-  {
     name: 'system',
     icon: 'setting',
     path: '/system',
@@ -269,7 +105,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/dashboard/analysis',
+    redirect: '/home',
   },
   {
     component: '404',
@@ -295,7 +131,6 @@ export default [
         // menuRender: false,
         // // 不展示菜单顶栏
         // menuHeaderRender: false,
-
       },
     ],
   },

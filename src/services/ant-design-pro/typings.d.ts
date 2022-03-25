@@ -24,9 +24,9 @@ declare namespace API {
   };
 
   type LoginResult = {
-    status?: string;
-    type?: string;
-    currentAuthority?: string;
+    code?: number;
+    msg?: string;
+    token?: string;
   };
 
   type PageParams = {
@@ -64,8 +64,8 @@ declare namespace API {
   type LoginParams = {
     username?: string;
     password?: string;
-    autoLogin?: boolean;
-    type?: string;
+    code?: string;
+    uuid?: string;
   };
 
   type ErrorResponse = {
@@ -100,7 +100,5 @@ declare namespace API {
   };
 
   /** 菜单泛型 **/
-  type menuParams = {
-
-  }
+  type menuParams = {};
 }

@@ -1,18 +1,14 @@
-import {
-  LockOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, message } from 'antd';
 import React, { useState } from 'react';
 import { ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
 import { useIntl, history, FormattedMessage, SelectLang, useModel } from 'umi';
-import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
-
+import cookie from 'react-cookies';
 import styles from './index.less';
 
 const LoginMessage: React.FC<{
-  content: string;
+  content?: string;
 }> = ({ content }) => (
   <Alert
     style={{
@@ -33,6 +29,8 @@ const Login: React.FC = () => {
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
+    console.log('获取用户信息---->');
+    console.log(userInfo);
     if (userInfo) {
       await setInitialState((s) => ({
         ...s,
@@ -44,11 +42,22 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const msg = await login({ ...values, type });
-      if (msg.status === 'ok') {
+      const res = await login({ ...values });
+      if (res.code === 200) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
           defaultMessage: '登录成功！',
+        });
+        const exceed = new Date(new Date().getTime() + 1800 * 1000);
+        const key = res.token || '';
+        cookie.save('token', key, { expires: exceed });
+        await setInitialState((s) => ({
+          ...s,
+          token: res.token,
+        }));
+        setTimeout(() => {
+          console.log('登录成功设置状态------>');
+          console.log(initialState);
         });
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
@@ -59,9 +68,8 @@ const Login: React.FC = () => {
         history.push(redirect || '/');
         return;
       }
-      console.log(msg);
       // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
+      setUserLoginState(res);
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
@@ -70,7 +78,7 @@ const Login: React.FC = () => {
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
+  const { code, msg } = userLoginState;
 
   return (
     <div className={styles.container}>
@@ -89,15 +97,7 @@ const Login: React.FC = () => {
             await handleSubmit(values as API.LoginParams);
           }}
         >
-
-          {status === 'error' && loginType === 'account' && (
-            <LoginMessage
-              content={intl.formatMessage({
-                id: 'pages.login.accountLogin.errorMessage',
-                defaultMessage: '账户或密码错误',
-              })}
-            />
-          )}
+          {code === 500 && <LoginMessage content={msg} />}
           {type === 'account' && (
             <>
               <ProFormText
@@ -164,7 +164,6 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
-      <Footer />
     </div>
   );
 };
