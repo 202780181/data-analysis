@@ -33,9 +33,9 @@ const TagsView = (props: {
 
   // 第一个需要单独设置
   const getAffix = useCallback(() => {
-    const title = titles[intl.locale] ? titles[intl.locale]['/'] : '首页';
+    const title = titles[intl.locale] ? (titles[intl.locale]['/']): '首页';
     return {
-      path: '/',
+      path: '/home',
       closable: false,
       title,
     };
@@ -130,6 +130,10 @@ const TagsView = (props: {
       return false;
     });
     const { pathname, query } = params;
+    // 路由 / 重定向到home  不需要展示
+    if(pathname === '/'){
+      return false
+    }
     // 先在手动配置里面找 没有配置就在路由里找（登录的时候需要设置到sessionStorage）
     let title = titles[intl.locale] && titles[intl.locale][pathname];
     if (title && JSON.stringify(query) !== '{}') {
