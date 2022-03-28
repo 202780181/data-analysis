@@ -2,6 +2,7 @@ export const titles: Record<string, string> = {
   '/welcome': 'Welcome',
   '/more-blocks': 'More Blocks',
   '/home': 'Home',
+  '/': 'Home',
   '/admin': 'Admin',
   '/admin.sub-page': 'Sub-Page',
   '/login': 'Login',

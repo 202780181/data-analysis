@@ -65,6 +65,7 @@ export async function getInitialState(): Promise<{
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
   const fetchUserInfo = async () => {
+    console.log('调用 fetchUserInfo---->');
     try {
       return await queryCurrentUser();
     } catch (error) {

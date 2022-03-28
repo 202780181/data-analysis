@@ -33,9 +33,9 @@ const TagsView = (props: {
 
   // 第一个需要单独设置
   const getAffix = useCallback(() => {
-    const title = titles[intl.locale] ? titles[intl.locale]['/dashboard/analysis'] : '首页';
+    const title = titles[intl.locale] ? titles[intl.locale]['/'] : '首页';
     return {
-      path: '/dashboard/analysis',
+      path: '/',
       closable: false,
       title,
     };
@@ -207,7 +207,7 @@ const TagsView = (props: {
     const affix = getAffix();
     setVisitedViews([affix]);
     setSessionStorage([affix]);
-    history.push('/dashboard/analysis');
+    history.push('/');
   };
   const [visible, setVisible] = useState(false);
 

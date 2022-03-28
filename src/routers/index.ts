@@ -104,10 +104,6 @@ export default [
     ],
   },
   {
-    path: '/',
-    redirect: '/home',
-  },
-  {
     component: '404',
   },
   {

@@ -21,12 +21,11 @@ const RequestInterceptor = (url: string, options: any) => {
 // 拦截器-响应后拦截
 const ResponseInterceptors = async (response: Response): Promise<any> => {
   const res = await response.clone().json();
-  if (res?.result) {
-    const { sacpresult, sucess } = res.result;
-    if (sucess) {
-      return sacpresult;
+  if (res?.code) {
+    if (res.code == 200) {
+      return res;
     } else {
-      message.error(res.result.sacpinfo || 'Error');
+      message.error(res.msg || 'Error');
     }
   }
   return response;

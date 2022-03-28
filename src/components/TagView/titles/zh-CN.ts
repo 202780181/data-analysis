@@ -2,6 +2,7 @@ export const titles: Record<string, string> = {
   '/welcome': '欢迎',
   '/more-blocks': '更多区块',
   '/home': '首页',
+  '/': '首页',
   '/admin': '管理页',
   '/admin/sub-page': '二级管理页',
   '/login': '登录',
