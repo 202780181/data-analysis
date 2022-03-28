@@ -2,40 +2,47 @@
 /* eslint-disable */
 
 declare namespace API {
-  // type CurrentUser = {
-  //   name?: string;
-  //   avatar?: string;
-  //   userid?: string;
-  //   email?: string;
-  //   signature?: string;
-  //   title?: string;
-  //   group?: string;
-  //   tags?: { key?: string; label?: string }[];
-  //   notifyCount?: number;
-  //   unreadCount?: number;
-  //   country?: string;
-  //   access?: string;
-  //   geographic?: {
-  //     province?: { label?: string; key?: string };
-  //     city?: { label?: string; key?: string };
-  //   };
-  //   address?: string;
-  //   phone?: string;
-  // };
+  type ResultParams = {
+    code?: number;
+    msg?: string;
+  };
   type CurrentUser = {
     admin?: boolean;
     avatar?: string;
     createBy?: string;
     createTime?: string;
     delFlag?: string;
-    dept?: Record<string, any>;
-  };
+    dept?: object;
+    deptId?: number;
+    email?: string;
+    loginDate?: string;
+    loginIp?: string;
+    nickName?: string;
+    params?: object;
+    phonenumber?: string;
+    postIds?: string;
+    remark?: string;
+    roleId?: string;
+    roleIds?: string;
+    roles?: Record<string, any>[];
+    searchValue?: string;
+    sex?: string;
+    status?: string;
+    updateBy?: string;
+    updateTime?: string;
+    userId?: string;
+    userName?: string;
+  } & ResultParams;
+
+  type UserInfoParams = {
+    permissions?: [string];
+    roles: [string];
+    user?: object;
+  } & ResultParams;
 
   type LoginResult = {
-    code?: number;
-    msg?: string;
     token?: string;
-  };
+  } & ResultParams;
 
   type PageParams = {
     current?: number;

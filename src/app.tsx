@@ -62,12 +62,13 @@ export const request: RequestConfig = {
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<API.ResultParams | undefined>;
 }> {
   const fetchUserInfo = async () => {
-    console.log('调用 fetchUserInfo---->');
     try {
-      return await queryCurrentUser();
+      const res = await queryCurrentUser();
+      if (res.code !== 200) cookie.remove('token');
+      return res.user;
     } catch (error) {
       cookie.remove('token');
       history.push(loginPath);
