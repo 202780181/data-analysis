@@ -48,6 +48,7 @@ const Login: React.FC = () => {
         });
         const exceed = new Date(new Date().getTime() + 1800 * 1000);
         const key = res.token || '';
+        if (cookie.load('token')) cookie.remove('token');
         cookie.save('token', key, { expires: exceed });
         await setInitialState((s) => ({
           ...s,
