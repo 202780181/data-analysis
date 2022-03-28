@@ -15,9 +15,10 @@ import {
 } from '@/middlewares/httpInterceptors';
 
 import {
+  HomeOutlined,
   BulbOutlined,
+  SettingOutlined,
   CheckCircleOutlined,
-  DashboardOutlined,
   FormOutlined,
   HighlightOutlined,
   ProfileOutlined,
@@ -92,7 +93,8 @@ export async function getInitialState(): Promise<{
 
 // 服务端获取menu, icon 必须映射使用
 const IconMap = {
-  dashboard: <DashboardOutlined />,
+  home: <HomeOutlined />,
+  setting: <SettingOutlined />,
   form: <FormOutlined />,
   table: <TableOutlined />,
   profile: <ProfileOutlined />,

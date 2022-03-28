@@ -1,5 +1,6 @@
 import { useIntl } from 'umi';
 import { DefaultFooter } from '@ant-design/pro-layout';
+import style from './index.less';
 
 export default () => {
   const intl = useIntl();
@@ -11,8 +12,6 @@ export default () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <DefaultFooter
-      copyright={`${currentYear} ${defaultMessage}`}
-    />
+    <DefaultFooter className={style.footerBar} copyright={`${currentYear} ${defaultMessage}`} />
   );
 };

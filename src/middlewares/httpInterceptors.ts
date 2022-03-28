@@ -29,6 +29,7 @@ const ResponseInterceptors = async (response: Response): Promise<any> => {
       return res;
     } else if (res.code == 401) {
       if (history.location.pathname !== loginPath) {
+        cookie.remove('token');
         history.push(loginPath);
       }
     } else {

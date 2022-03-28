@@ -24,20 +24,9 @@ export default [
     ],
   },
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     icon: 'home',
-    routes: [
-      {
-        path: '/',
-        redirect: '/home',
-      },
-      {
-        name: 'home',
-        icon: 'home',
-        path: '/home',
-      },
-    ],
   },
   {
     name: 'exception',
@@ -102,6 +91,10 @@ export default [
         path: '/system/user',
       },
     ],
+  },
+  {
+    path: '/',
+    redirect: '/home',
   },
   {
     component: '404',
