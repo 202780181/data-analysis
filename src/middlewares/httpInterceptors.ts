@@ -1,5 +1,8 @@
 import { message } from 'antd';
 import cookie from 'react-cookies';
+import { history } from '@@/core/history';
+
+const loginPath = '/user/login';
 
 // 拦截器-请求前拦截
 const RequestInterceptor = (url: string, options: any) => {
@@ -24,6 +27,10 @@ const ResponseInterceptors = async (response: Response): Promise<any> => {
   if (res?.code) {
     if (res.code == 200) {
       return res;
+    } else if (res.code == 401) {
+      if (history.location.pathname !== loginPath) {
+        history.push(loginPath);
+      }
     } else {
       message.error(res.msg || 'Error');
     }

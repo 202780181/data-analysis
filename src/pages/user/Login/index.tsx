@@ -29,8 +29,6 @@ const Login: React.FC = () => {
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
-    console.log('获取用户信息---->');
-    console.log(userInfo);
     if (userInfo) {
       await setInitialState((s) => ({
         ...s,
@@ -53,7 +51,6 @@ const Login: React.FC = () => {
         cookie.save('token', key, { expires: exceed });
         await setInitialState((s) => ({
           ...s,
-          token: res.token,
         }));
 
         message.success(defaultLoginSuccessMessage);
