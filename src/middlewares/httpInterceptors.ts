@@ -8,8 +8,11 @@ const RequestInterceptor = (url: string, options: any) => {
   // headers 里面的内容是和后端协商好的
   o.headers = {
     ...options.headers,
-    token: cookie?.load('token'),
+    Authorization: (cookie?.load('token') && 'Bearer ' + cookie?.load('token')) || undefined,
   };
+  if (o.headers.Authorization === undefined) {
+    delete o.headers['Authorization'];
+  }
   return {
     options: o,
   };

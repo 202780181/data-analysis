@@ -55,10 +55,7 @@ const Login: React.FC = () => {
           ...s,
           token: res.token,
         }));
-        setTimeout(() => {
-          console.log('登录成功设置状态------>');
-          console.log(initialState);
-        });
+
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         /** 此方法会跳转到 redirect 参数所在的位置 */

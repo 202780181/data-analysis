@@ -1,30 +1,29 @@
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
-import type { MenuDataItem } from '@ant-design/pro-layout';
-import type { RunTimeLayoutConfig } from 'umi';
+import type { MenuDataItem, Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import { history } from 'umi';
+import type { RunTimeLayoutConfig } from 'umi';
+import { history, RequestConfig } from 'umi';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
-import { RequestConfig } from 'umi';
 import routers from '@/routers';
 import NoPermission from '@/pages/exception/403';
+import cookie from 'react-cookies';
 
 import {
+  errorHandler,
   RequestInterceptor,
   ResponseInterceptors,
-  errorHandler,
 } from '@/middlewares/httpInterceptors';
 
 import {
+  BulbOutlined,
+  CheckCircleOutlined,
   DashboardOutlined,
   FormOutlined,
-  TableOutlined,
-  ProfileOutlined,
-  CheckCircleOutlined,
-  WarningOutlined,
-  UserOutlined,
   HighlightOutlined,
-  BulbOutlined,
+  ProfileOutlined,
+  TableOutlined,
+  UserOutlined,
+  WarningOutlined,
 } from '@ant-design/icons';
 import TagView from '@/components/TagView';
 import EventEmitter from '@/utils/eventEmitter';
@@ -67,9 +66,9 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser();
-      return msg.data;
+      return await queryCurrentUser();
     } catch (error) {
+      cookie.remove('token');
       history.push(loginPath);
     }
     return undefined;
