@@ -63,14 +63,14 @@ export const request: RequestConfig = {
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
+  currentUser?: API.UserInfoParams;
   fetchUserInfo?: () => Promise<API.ResultParams | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
       const res = await queryCurrentUser();
       if (res.code !== 200) cookie.remove('token');
-      return res.user;
+      return res;
     } catch (error) {
       cookie.remove('token');
       history.push(loginPath);
@@ -109,7 +109,6 @@ const IconMap = {
 const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
   menus.map(({ icon, routes, ...item }) => ({
     ...item,
-    ...routers,
     icon: icon && IconMap[icon as string],
     routes: routes && loopMenuItem(routes),
   }));
@@ -128,7 +127,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     menu: {
       // 每当 initialState?.currentUser?.userid 发生修改时重新执行 request
       params: {
-        userId: initialState?.currentUser?.userId,
+        userId: initialState?.currentUser?.user?.userId,
       },
       request: async () => {
         // 登录页时不加载菜单请求,防止登录页面左侧菜单闪烁

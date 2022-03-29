@@ -35,9 +35,9 @@ declare namespace API {
   } & ResultParams;
 
   type UserInfoParams = {
-    permissions?: [string];
-    roles: [string];
-    user?: object;
+    permissions?: string[];
+    roles?: string[];
+    user?: any;
   } & ResultParams;
 
   type LoginResult = {
