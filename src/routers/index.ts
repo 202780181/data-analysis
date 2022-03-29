@@ -4,9 +4,17 @@
 export default [
   {
     path: '/user',
+    /**
+     * @name false 时不展示菜单
+     */
     menuRender: false,
-    // 不展示菜单顶栏
+    /**
+     * @name false 时不展示菜单顶栏
+     */
     menuHeaderRender: false,
+    /**
+     * @name false 时不展示顶栏
+     */
     headerRender: false,
     routes: [
       {
@@ -82,13 +90,10 @@ export default [
     path: '/system',
     routes: [
       {
-        path: '/user',
-        redirect: '/system/user',
-      },
-      {
         name: 'user',
         icon: 'smile',
         path: '/system/user',
+        redirect: '/system/user',
       },
     ],
   },

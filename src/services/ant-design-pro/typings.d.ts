@@ -115,5 +115,7 @@ declare namespace API {
   };
 
   /** 菜单泛型 **/
-  type menuParams = {};
+  type menuParams = {
+    data?: Record<string, any>[];
+  };
 }

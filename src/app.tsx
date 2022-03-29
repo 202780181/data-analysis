@@ -4,9 +4,9 @@ import type { RunTimeLayoutConfig } from 'umi';
 import { history, RequestConfig } from 'umi';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
-import routers from '@/routers';
 import NoPermission from '@/pages/exception/403';
 import cookie from 'react-cookies';
+import { fetchMenuData } from '@/services/ant-design-pro/system';
 
 import {
   errorHandler,
@@ -120,8 +120,19 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
     rightContentRender: () => <TagView />,
     disableContentMargin: false,
-    menuDataRender: () => {
-      return loopMenuItem(routers);
+    // menuDataRender: () => {
+    //   return loopMenuItem(routers);
+    // },
+    menu: {
+      // 每当 initialState?.currentUser?.userid 发生修改时重新执行 request
+      params: {
+        userId: initialState?.currentUser?.userId,
+      },
+      request: async () => {
+        // initialState.currentUser 中包含了所有用户信息
+        const menuData = await fetchMenuData();
+        return loopMenuItem(menuData?.data || []);
+      },
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
