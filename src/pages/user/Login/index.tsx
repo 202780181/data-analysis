@@ -47,7 +47,7 @@ const Login: React.FC = () => {
           id: 'pages.login.success',
           defaultMessage: '登录成功！',
         });
-        const exceed = new Date(new Date().getTime() + 1800 * 1000);
+        const exceed = new Date(new Date().getTime() + 24 * 3600 * 1000);
         const key = res.token || '';
         cookie.save('token', key, { expires: exceed });
         await setInitialState((s) => ({

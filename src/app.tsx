@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import NoPermission from '@/pages/exception/403';
 import cookie from 'react-cookies';
+import routers from '@/routers';
 import { fetchMenuData } from '@/services/ant-design-pro/system';
 
 import {
@@ -108,6 +109,7 @@ const IconMap = {
 const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
   menus.map(({ icon, routes, ...item }) => ({
     ...item,
+    ...routers,
     icon: icon && IconMap[icon as string],
     routes: routes && loopMenuItem(routes),
   }));
@@ -129,9 +131,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
         userId: initialState?.currentUser?.userId,
       },
       request: async () => {
+        // 登录页时不加载菜单请求,防止登录页面左侧菜单闪烁
+        if (!initialState?.currentUser && location.pathname === loginPath) return routers;
         // initialState.currentUser 中包含了所有用户信息
         const menuData = await fetchMenuData();
-        return loopMenuItem(menuData?.data || []);
+        return loopMenuItem([...(menuData?.data || []), ...routers]);
       },
     },
     footerRender: () => <Footer />,
