@@ -1,13 +1,15 @@
-/*eslint no-shadow: "error"*/
-/*eslint-env es6*/
 import { FC, useRef } from 'react';
 import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
+import BorderBox from "@/components/BorderBox";
 import { menuList } from './service';
 import { TableListItem } from '@/pages/system/user/data';
 import style from './index.less';
 
+type baseProps = {
+  title?:''
+}
 const valueEnum = {
   '0': {
     text: '正常',
@@ -137,22 +139,25 @@ const getMenuList = async (): Promise<{ data: []; success: boolean }> => {
   });
 };
 
-const Menu: FC = () => {
+const Menu: FC<baseProps> = () => {
   const actionRef = useRef<ActionType>();
   return (
     <div className={style.systemMenu}>
-      <ProTable
-        headerTitle=""
-        actionRef={actionRef}
-        cardBordered
-        rowKey="menuId"
-        search={{
-          labelWidth: 'auto',
-        }}
-        toolBarRender={false}
-        request={getMenuList}
-        columns={columns}
-      />
+      <BorderBox
+       title="测试标题">
+        <ProTable
+          headerTitle=""
+          actionRef={actionRef}
+          cardBordered
+          rowKey="menuId"
+          search={{
+            labelWidth: 'auto',
+          }}
+          toolBarRender={false}
+          request={getMenuList}
+          columns={columns}
+        />
+      </BorderBox>
     </div>
   );
 };

@@ -8,5 +8,6 @@ module.exports = {
   },
   rules: {
     'no-shadow': 'off',
+    'no-unused-expressions': 'off'
   },
 };

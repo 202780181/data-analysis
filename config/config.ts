@@ -70,4 +70,15 @@ export default defineConfig({
   mfsu: {},
   webpack5: {},
   exportStatic: {},
+  chainWebpack: (config) => {
+    config.module
+      .rule('ttf')
+      .test(/\.(otf|ttf|TTF)(\?.*)?$/)
+      .use('file-loader')
+      .loader(require.resolve('file-loader'))
+      .tap((options) => ({
+        ...options,
+        name: 'static/fonts/[name].[hash:8].[ext]',
+      }));
+  }
 });
