@@ -244,7 +244,7 @@ const TagsView = (props: {
         <Scrollbars
           autoHide
           ref={ScrollbarsRef}
-          style={{ width: '100%', height: 34, whiteSpace: 'nowrap' }}
+          style={{ width: '100%', height: 46, whiteSpace: 'nowrap' }}
         >
           {visitedViews.map((tag) => (
             <a

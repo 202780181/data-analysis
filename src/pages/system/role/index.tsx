@@ -17,21 +17,22 @@ const valueEnum = {
 
 const columns: ProColumns<TableListItem>[] = [
   {
-    title: '菜单名称',
+    search: false,
+    title: '角色编码',
     dataIndex: 'name',
   },
   {
-    title: '图标',
+    title: '角色名称',
     dataIndex: 'icon',
   },
   {
-    title: '排序',
+    title: '权限字符',
     dataIndex: 'sort',
   },
   {
-    title: '权限标识',
-    dataIndex: 'permissions',
     search: false,
+    title: '显示顺序',
+    dataIndex: 'permissions',
   },
   {
     title: '状态',
@@ -42,7 +43,6 @@ const columns: ProColumns<TableListItem>[] = [
     valueEnum,
   },
   {
-    search: false,
     title: '创建时间',
     dataIndex: 'createTime',
   },
@@ -52,13 +52,17 @@ const columns: ProColumns<TableListItem>[] = [
     valueType: 'option',
     key: 'option',
     render: () => [
-      <a key="editable" onClick={() => {}}>
+      <a key="editable" onClick={() => { }}>
         <EditOutlined />
-        编辑
+        修改
       </a>,
-      <a rel="noopener noreferrer" key="add">
-        <PlusOutlined />
-        新增
+      <a rel="noopener noreferrer" key="delete">
+        <DeleteOutlined />
+        院系部门权限
+      </a>,
+      <a rel="noopener noreferrer" key="delete">
+        <DeleteOutlined />
+        商户部门权限
       </a>,
       <a rel="noopener noreferrer" key="delete">
         <DeleteOutlined />
@@ -82,7 +86,7 @@ const User: FC = () => {
         toolBarRender={false}
         request={rule}
         columns={columns}
-      />
+      ></ProTable>
     </div>
   );
 };

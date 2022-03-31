@@ -1,5 +1,123 @@
 @import '~antd/es/style/themes/default.less';
+@primary-data-color: #5a7fd8;
 
 .home {
-  display: block;
+  .boxShadow-mixin(){
+    box-shadow: 0px 2px 20px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 14px
+  }
+  .header{
+    .boxShadow-mixin();
+    width: 100%;
+    min-height: 218px;
+    background: #FFF;
+    margin-top: 20px;
+    .headerContent{
+      display: flex;
+      justify-content: space-between;
+      padding: 30px 35px;
+      .headerItem{
+        height: 120px;
+        border-radius: 8px;
+        color: #FFF;
+        padding: 15px;
+        width: 18%;   
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;  
+        .top{
+          flex: 1;
+          display: flex;
+          .amount{
+            height: 42px;
+            font-size: 30px;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            font-weight: 600;
+            color: #FFF;
+            line-height: 42px;
+            text-align: center;
+          }
+          .circle{
+            flex: 1;
+            text-align: right;
+          }
+        }
+        .type{
+          display: flex;
+          justify-content: space-between;
+          span{
+            padding: 0 10px;
+            line-height: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+          }
+        }
+      }
+      @media screen  and (max-width: 1500px){
+        .headerItem{
+          padding: 15px 6px;
+        }
+      }
+      .purple{
+        background: linear-gradient(136deg, #8793F5 0%, #BCC4FE 100%);
+      }
+      .orange{
+        background: linear-gradient(135deg, #FF8A86 0%, #F7C498 100%);
+      }
+      .pink{
+        background: linear-gradient(135deg, #F6B2BF 0%, #A27AFC 100%);
+      }
+      .green{
+        background: linear-gradient(135deg, #44DEC5 0%, #4DBEF6 100%);
+      }
+      .blue{
+        background: linear-gradient(135deg, #54BEF1 0%, #4384DE 100%);
+      }
+    }
+  }
+  .shadow{
+    .boxShadow-mixin();
+  }
+  .titleText{
+    position: relative;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #333;
+    line-height: 20px;
+    margin-left: 10px;
+    &::after{
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 5px;
+      width: 3px;
+      height: 10px;
+      background: @primary-data-color;
+      border-radius: 6px;
+    }
+
+  }
+  .up{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAAXNSR0IArs4c6QAAAHVQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5YtmQAAAACd0Uk5TAAECAwQFBwgJDxARFRYZHB8gJCUuOT5ERkdPWV9iZXJ3eXt8fX6AnjZ8KAAAAJVJREFUKM/F0dkWgiAQgOEBQzN3cykXXMp5/0fMimRQ7vsu/zmHOQDAxpfSB4twQBzCY09GXI3Jvl9n/JhzsxcLKktBe4lEqXuNhlpl3uBOw99dtHjQCoBzjxa9Bx1adQCMMaeirXLWpPandJCSe/x1EDx1fwT0ed3LxjX+g8eZEnPahdRHyRMZRHR5RAbsPv3ydPumF7SDKvPY/nPmAAAAAElFTkSuQmCC');
+    background-size: 100%;
+    background-position: center;
+    margin-left: 10px;
+  }
+  .down{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAAXNSR0IArs4c6QAAAHVQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5YtmQAAAACd0Uk5TAAECAwQFBwgJDxARFRYZHB8gJCUuOT5ERkdPWV9iZXJ3eXt8fX6AnjZ8KAAAAJVJREFUKM/F0dkWgiAQgOEBQzN3cykXXMp5/0fMimRQ7vsu/zmHOQDAxpfSB4twQBzCY09GXI3Jvl9n/JhzsxcLKktBe4lEqXuNhlpl3uBOw99dtHjQCoBzjxa9Bx1adQCMMaeirXLWpPandJCSe/x1EDx1fwT0ed3LxjX+g8eZEnPahdRHyRMZRHR5RAbsPv3ydPumF7SDKvPY/nPmAAAAAElFTkSuQmCC');
+    background-size: 100%;
+    background-position: center;
+    transform: rotate(180deg);
+    margin-left: 10px;
+
+  }
 }

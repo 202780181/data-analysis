@@ -56,3 +56,25 @@ export const option = {
   ]
 };
 
+
+export const breakfastRing = {
+  height: 50,
+  width: 50,
+  autoFit: false,
+  percent: 0.7,
+  color: ['#FFF', '#d1aeef'],
+}
+export const LunchRing = {
+  height: 50,
+  width: 50,
+  autoFit: false,
+  percent: 0.7,
+  color: ['#FFF', '#80d8ee'],
+}
+export const dinnerRing = {
+  height: 50,
+  width: 50,
+  autoFit: false,
+  percent: 0.7,
+  color: ['#FFF', '#7fb6ec'],
+}
