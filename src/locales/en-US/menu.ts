@@ -52,5 +52,6 @@ export default {
   'menu.editor.koni': 'Koni Editor',
   'menu.system': 'system',
   'menu.system.user': 'user manager',
+  'menu.system.manu': 'menu manager',
   'menu.testMenu.chart': 'chart',
 };

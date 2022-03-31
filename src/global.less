@@ -35,6 +35,90 @@ ul,
 ol {
   list-style: none;
 }
+.ant-menu {
+  color: #fff;
+}
+.ant-menu-submenu-selected {
+  color: #fff;
+}
+.ant-menu-submenu {
+  &:hover {
+    & > .ant-menu-submenu-title {
+      & > .ant-menu-submenu-arrow {
+        color: #fff;
+      }
+    }
+  }
+}
+.ant-menu-light {
+  .ant-menu-submenu-active {
+    color: #fff;
+  }
+  .ant-menu-submenu-title {
+    &:hover {
+      color: #fff;
+    }
+  }
+  .ant-menu-item {
+    &:hover {
+      color: #fff;
+    }
+    a {
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+  .ant-menu-item-active {
+    color: #fff;
+  }
+}
+.ant-pro-sider-light {
+  .ant-pro-sider-logo {
+    h1 {
+      color: #fff;
+    }
+  }
+}
+
+.ant-menu-submenu-expand-icon,
+.ant-menu-submenu-arrow {
+  color: rgba(255, 255, 255, 1);
+}
+.ant-menu-inline {
+  .ant-menu-item {
+    width: calc(100% - 12px);
+    margin: 8px 6px 8px 6px;
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      border-right: 0;
+      content: '';
+    }
+  }
+}
+.ant-pro-sider {
+  background-color: #5a7fd8;
+  .ant-menu:not(.ant-menu-horizontal) {
+    .ant-menu-item-selected {
+      color: #5a7fd8;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+  }
+  &.ant-layout-sider-light {
+    .ant-menu-item {
+      a {
+        color: #fff;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
 
 @media (max-width: @screen-xs) {
   .ant-table {

@@ -1,24 +1,28 @@
+/*eslint no-shadow: "error"*/
+/*eslint-env es6*/
 import { FC, useRef } from 'react';
 import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { rule } from '@/pages/system/user/service';
+import { menuList } from './service';
 import { TableListItem } from '@/pages/system/user/data';
 import style from './index.less';
 
-// const valueEnumMap = {
-//   0: 'close',
-//   1: 'running'
-// }
 const valueEnum = {
-  close: { text: '正常', status: '0' },
-  running: { text: '停用', status: '1' },
+  '0': {
+    text: '正常',
+    status: 'Success',
+  },
+  '1': {
+    text: '关闭',
+    status: 'Default',
+  },
 };
 
 const columns: ProColumns<TableListItem>[] = [
   {
     title: '菜单名称',
-    dataIndex: 'name',
+    dataIndex: 'menuName',
   },
   {
     search: false,
@@ -28,11 +32,16 @@ const columns: ProColumns<TableListItem>[] = [
   {
     search: false,
     title: '排序',
-    dataIndex: 'sort',
+    dataIndex: 'orderNum',
   },
   {
     title: '权限标识',
-    dataIndex: 'permissions',
+    dataIndex: 'perms',
+    search: false,
+  },
+  {
+    title: '组件路径',
+    dataIndex: 'component',
     search: false,
   },
   {
@@ -69,6 +78,65 @@ const columns: ProColumns<TableListItem>[] = [
     ],
   },
 ];
+
+/** 转换组合树结构 */
+const handleTree = (
+  data: { [key: number]: any }[],
+  id: string,
+  parentId?: string,
+  children?: any,
+) => {
+  const config = {
+    id: id || 'id',
+    parentId: parentId || 'parentId',
+    childrenList: children || 'children',
+  };
+  const childrenListMap: object = {};
+  const nodeIds: object = {};
+  const tree: any = [];
+
+  for (const d of data) {
+    if (childrenListMap[d[config.parentId]] == null) {
+      childrenListMap[d[config.parentId]] = [];
+    }
+    nodeIds[d[config.id]] = d;
+    childrenListMap[d[config.parentId]].push(d);
+  }
+
+  for (const d of data) {
+    if (nodeIds[d[config.parentId]] == null) {
+      tree.push(d);
+    }
+  }
+
+  for (const t of tree) {
+    adaptToChildrenList(t);
+  }
+
+  function adaptToChildrenList(o: any) {
+    if (childrenListMap[o[config.id]] !== null) {
+      o[config.childrenList] = childrenListMap[o[config.id]];
+    }
+    if (o[config.childrenList]) {
+      for (const c of o[config.childrenList]) {
+        adaptToChildrenList(c);
+      }
+    }
+  }
+
+  return tree;
+};
+
+/** 获取菜单列表 */
+const getMenuList = async (): Promise<{ data: []; success: boolean }> => {
+  const res = await menuList({});
+  const data = handleTree(res.data, 'menuId');
+  return Promise.resolve({
+    data: data,
+    success: true,
+  });
+};
+
 const Menu: FC = () => {
   const actionRef = useRef<ActionType>();
   return (
@@ -77,14 +145,14 @@ const Menu: FC = () => {
         headerTitle=""
         actionRef={actionRef}
         cardBordered
-        rowKey="id"
+        rowKey="menuId"
         search={{
           labelWidth: 'auto',
         }}
         toolBarRender={false}
-        request={rule}
+        request={getMenuList}
         columns={columns}
-      ></ProTable>
+      />
     </div>
   );
 };

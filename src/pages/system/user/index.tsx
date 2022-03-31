@@ -84,7 +84,7 @@ const User: FC = () => {
         toolBarRender={false}
         request={rule}
         columns={columns}
-      ></ProTable>
+      />
     </div>
   );
 };

@@ -52,6 +52,7 @@ export default {
   'menu.editor.koni': '拓扑编辑器',
   'menu.system': '系统设置',
   'menu.system.user': '用户管理',
+  'menu.system.menu': '菜单管理',
   'menu.testMenu': '测试菜单',
   'menu.testMenu.chart': '图表',
 };
