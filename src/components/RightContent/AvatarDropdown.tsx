@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu, Spin, Modal } from 'antd';
+import { Avatar, Menu, Spin, Modal, message } from 'antd';
 import { history, useModel } from 'umi';
 import { stringify } from 'querystring';
 import HeaderDropdown from '../HeaderDropdown';
@@ -20,7 +20,11 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
    * 退出登录，并且将当前的 url 保存
    */
   const loginOut = async () => {
-    await outLogin();
+    const res = await outLogin();
+    if (res.code !== 200) {
+      message.warning(res.msg);
+      return;
+    }
     const { query = {}, pathname } = history.location;
     const { redirect } = query;
     // Note: There may be security issues, please note

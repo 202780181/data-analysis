@@ -85,8 +85,6 @@ const updateTheme = async (dark: boolean, color?: string) => {
   });
 
   if (dark) {
-    console.log('应用色为黑色---->');
-    console.log(dark);
     const defaultTheme = {
       brightness: 100,
       contrast: 90,
