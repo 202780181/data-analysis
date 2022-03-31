@@ -2,14 +2,14 @@ import { FC, useRef } from 'react';
 import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import BorderBox from "@/components/BorderBox";
+import BorderBox from '@/components/BorderBox';
 import { menuList } from './service';
 import { TableListItem } from '@/pages/system/user/data';
 import style from './index.less';
 
 type baseProps = {
-  title?:''
-}
+  title?: '';
+};
 const valueEnum = {
   '0': {
     text: '正常',
@@ -143,8 +143,7 @@ const Menu: FC<baseProps> = () => {
   const actionRef = useRef<ActionType>();
   return (
     <div className={style.systemMenu}>
-      <BorderBox
-       title="测试标题">
+      <BorderBox title="菜单管理" actionRef={actionRef}>
         <ProTable
           headerTitle=""
           actionRef={actionRef}
