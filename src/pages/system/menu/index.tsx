@@ -10,6 +10,7 @@ import {
   Row,
   Col,
   ConfigProvider,
+  message,
 } from 'antd';
 import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -151,141 +152,156 @@ const getMenuList = async (): Promise<{ data: []; success: boolean }> => {
   });
 };
 
-const Menu: FC<baseProps> = () => {
-  const actionRef = useRef<ActionType>();
-  const [showModule, setShowModule] = useState(false);
+const AddModuleFunc: FC<{
+  visible?: boolean;
+}> = (props) => {
+  const { visible } = props;
+  const [form] = Form.useForm();
   const [menuData] = useState({
+    parentId: '',
     name: '测试菜单',
     menuType: '1',
     visible: '0',
     status: '0',
   });
-  const [form] = Form.useForm();
+  const handleOk = () => {
+    console.log('点击确认---->');
+  };
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log(errorInfo);
+  };
+  const menuTypeChange = () => {};
 
   useEffect(() => {
-    form.resetFields();
+    // form.resetFields();
   }, []);
 
-  const AddModuleFunc = () => {
-    const handleOk = () => {
-      console.log('点击确认---->');
-    };
-    const onFinish = (values: any) => {
-      console.log(values);
-    };
-    const onFinishFailed = (errorInfo: any) => {
-      console.log(errorInfo);
-    };
-    const menuTypeChange = () => {};
-    return (
-      <Modal
-        width="700"
-        key="addModule-a543"
-        title="添加菜单"
-        visible={showModule}
-        onOk={handleOk}
-        onCancel={() => setShowModule(false)}
+  return (
+    <Modal
+      width="700px"
+      key="addModule-a543"
+      title="添加菜单"
+      visible={visible}
+      onOk={handleOk}
+      getContainer={false}
+      onCancel={() => {}}
+    >
+      <Form
+        form={form}
+        name="basic"
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 20 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
-        <Form
-          form={form}
-          name="basic"
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 20 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+        <Form.Item
+          label="上级菜单"
+          name="parentId"
+          rules={[{ required: true, message: '请选择上级菜单' }]}
         >
-          <Form.Item
-            label="上级菜单"
-            name="parentId"
-            rules={[{ required: true, message: '请选择上级菜单' }]}
-          >
-            <TreeSelect
-              treeData={[
-                {
-                  title: 'Light',
-                  value: 'light',
-                  children: [{ title: 'Bamboo', value: 'bamboo' }],
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label="菜单类型" name="menuType">
-            <Radio.Group onChange={menuTypeChange} value={menuData.menuType}>
-              <Radio value={'1'}>目录</Radio>
-              <Radio value={'2'}>菜单</Radio>
-              <Radio value={'3'}>按钮</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="菜单图标" name="icon">
-            <Popover placement="bottom" content={'这是现实内容'} trigger="click">
-              <Input readOnly />
-            </Popover>
-          </Form.Item>
-          <Row>
-            <Col span={12}>
-              <Form.Item
-                label="菜单名称:"
-                name="name"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Input value={menuData.name} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="显示排序:"
-                name="sort"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item label="路由地址" name="component">
-            <Input />
-          </Form.Item>
-          <Row>
-            <Col span={12}>
-              <Form.Item
-                label="显示状态:"
-                name="visible"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Radio.Group onChange={menuTypeChange} value={menuData.visible}>
-                  <Radio value={1}>显示</Radio>
-                  <Radio value={2}>隐藏</Radio>
-                </Radio.Group>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="菜单状态:"
-                name="status"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Radio.Group onChange={menuTypeChange} value={menuData.status}>
-                  <Radio value={1}>正常</Radio>
-                  <Radio value={2}>停用</Radio>
-                </Radio.Group>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </Modal>
-    );
+          <TreeSelect
+            treeData={[
+              {
+                title: 'Light',
+                value: 'light',
+                children: [{ title: 'Bamboo', value: 'bamboo' }],
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item label="菜单类型" name="menuType">
+          <Radio.Group onChange={menuTypeChange} value={menuData.menuType}>
+            <Radio value={'1'}>目录</Radio>
+            <Radio value={'2'}>菜单</Radio>
+            <Radio value={'3'}>按钮</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label="菜单图标" name="icon">
+          <Popover placement="bottom" content={'这是现实内容'} trigger="click">
+            <Input readOnly />
+          </Popover>
+        </Form.Item>
+        <Row>
+          <Col span={12}>
+            <Form.Item
+              label="菜单名称:"
+              name="name"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Input value={menuData.name} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="显示排序:"
+              name="sort"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Form.Item label="路由地址" name="component">
+          <Input />
+        </Form.Item>
+        <Row>
+          <Col span={12}>
+            <Form.Item
+              label="显示状态:"
+              name="visible"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Radio.Group onChange={menuTypeChange} value={menuData.visible}>
+                <Radio value={1}>显示</Radio>
+                <Radio value={2}>隐藏</Radio>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="菜单状态:"
+              name="status"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Radio.Group onChange={menuTypeChange} value={menuData.status}>
+                <Radio value={1}>正常</Radio>
+                <Radio value={2}>停用</Radio>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+    </Modal>
+  );
+};
+
+const Menu: FC<baseProps> = () => {
+  const actionRef = useRef<ActionType>();
+  const [showModule, setShowModule] = useState(false);
+  const [selectRow, setSelectRow] = useState<any[]>([]);
+
+  const updateMenu = (data: any[]) => {
+    if (!data.length && data.length !== 1) {
+      message.warning('选择要修改的数据必须为1条！');
+      return;
+    }
+    console.log('点击修改---->');
+    console.log(data);
   };
 
-  const updateMenu = () => {};
   return (
     <ConfigProvider>
       <div className={style.systemMenu}>
-        <BorderBox title="菜单管理" cut={10} autoHigh actionRef={actionRef}>
+        <BorderBox title="菜单管理" cut={10} autoHigh>
           <ProTable
             pagination={false}
             className={style.useTable}
@@ -311,7 +327,7 @@ const Menu: FC<baseProps> = () => {
                   key="edit-module"
                   className={style.searchBtn}
                   type="primary"
-                  onClick={() => updateMenu}
+                  onClick={() => updateMenu(selectRow)}
                 >
                   <EditOutlined />
                   修改
@@ -324,13 +340,16 @@ const Menu: FC<baseProps> = () => {
             }}
             rowSelection={{
               type: 'checkbox',
+              onChange: (selectedRowKeys, selectedRows) => {
+                setSelectRow(selectedRows);
+              },
             }}
             toolBarRender={false}
             request={getMenuList}
             columns={columns}
           />
         </BorderBox>
-        <AddModuleFunc />
+        <AddModuleFunc visible={showModule} />
       </div>
     </ConfigProvider>
   );
