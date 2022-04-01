@@ -1,4 +1,16 @@
-import { FC, useRef } from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  TreeSelect,
+  Radio,
+  Popover,
+  Row,
+  Col,
+  ConfigProvider,
+} from 'antd';
 import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -12,11 +24,11 @@ type baseProps = {
 };
 const valueEnum = {
   '0': {
-    text: '正常',
+    text: '显示',
     status: 'Success',
   },
   '1': {
-    text: '关闭',
+    text: '不显示',
     status: 'Default',
   },
 };
@@ -61,22 +73,22 @@ const columns: ProColumns<TableListItem>[] = [
   },
   {
     title: '操作',
-    width: 200,
+    width: 300,
     valueType: 'option',
     key: 'option',
     render: () => [
-      <a key="editable" onClick={() => {}}>
+      <Button key="edit" className={style.edit} size="small" onClick={() => {}}>
         <EditOutlined />
         编辑
-      </a>,
-      <a rel="noopener noreferrer" key="add">
+      </Button>,
+      <Button type="primary" size="small" rel="noopener noreferrer" key="add">
         <PlusOutlined />
         新增
-      </a>,
-      <a rel="noopener noreferrer" key="delete">
+      </Button>,
+      <Button type="primary" danger size="small" rel="noopener noreferrer" key="delete">
         <DeleteOutlined />
         删除
-      </a>,
+      </Button>,
     ],
   },
 ];
@@ -141,23 +153,186 @@ const getMenuList = async (): Promise<{ data: []; success: boolean }> => {
 
 const Menu: FC<baseProps> = () => {
   const actionRef = useRef<ActionType>();
+  const [showModule, setShowModule] = useState(false);
+  const [menuData] = useState({
+    name: '测试菜单',
+    menuType: '1',
+    visible: '0',
+    status: '0',
+  });
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.resetFields();
+  }, []);
+
+  const AddModuleFunc = () => {
+    const handleOk = () => {
+      console.log('点击确认---->');
+    };
+    const onFinish = (values: any) => {
+      console.log(values);
+    };
+    const onFinishFailed = (errorInfo: any) => {
+      console.log(errorInfo);
+    };
+    const menuTypeChange = () => {};
+    return (
+      <Modal
+        width="700"
+        key="addModule-a543"
+        title="添加菜单"
+        visible={showModule}
+        onOk={handleOk}
+        onCancel={() => setShowModule(false)}
+      >
+        <Form
+          form={form}
+          name="basic"
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="上级菜单"
+            name="parentId"
+            rules={[{ required: true, message: '请选择上级菜单' }]}
+          >
+            <TreeSelect
+              treeData={[
+                {
+                  title: 'Light',
+                  value: 'light',
+                  children: [{ title: 'Bamboo', value: 'bamboo' }],
+                },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item label="菜单类型" name="menuType">
+            <Radio.Group onChange={menuTypeChange} value={menuData.menuType}>
+              <Radio value={'1'}>目录</Radio>
+              <Radio value={'2'}>菜单</Radio>
+              <Radio value={'3'}>按钮</Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item label="菜单图标" name="icon">
+            <Popover placement="bottom" content={'这是现实内容'} trigger="click">
+              <Input readOnly />
+            </Popover>
+          </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item
+                label="菜单名称:"
+                name="name"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Input value={menuData.name} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="显示排序:"
+                name="sort"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item label="路由地址" name="component">
+            <Input />
+          </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item
+                label="显示状态:"
+                name="visible"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Radio.Group onChange={menuTypeChange} value={menuData.visible}>
+                  <Radio value={1}>显示</Radio>
+                  <Radio value={2}>隐藏</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="菜单状态:"
+                name="status"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Radio.Group onChange={menuTypeChange} value={menuData.status}>
+                  <Radio value={1}>正常</Radio>
+                  <Radio value={2}>停用</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
+    );
+  };
+
+  const updateMenu = () => {};
   return (
-    <div className={style.systemMenu}>
-      <BorderBox title="菜单管理" actionRef={actionRef}>
-        <ProTable
-          headerTitle=""
-          actionRef={actionRef}
-          cardBordered
-          rowKey="menuId"
-          search={{
-            labelWidth: 'auto',
-          }}
-          toolBarRender={false}
-          request={getMenuList}
-          columns={columns}
-        />
-      </BorderBox>
-    </div>
+    <ConfigProvider>
+      <div className={style.systemMenu}>
+        <BorderBox title="菜单管理" cut={10} autoHigh actionRef={actionRef}>
+          <ProTable
+            pagination={false}
+            className={style.useTable}
+            headerTitle=""
+            actionRef={actionRef}
+            cardBordered
+            rowKey="menuId"
+            search={{
+              // span: defaultColConfig,
+              defaultCollapsed: false,
+              labelWidth: 'auto',
+              optionRender: () => [
+                <Button
+                  key="add-module"
+                  className={style.searchBtn}
+                  type="primary"
+                  onClick={() => setShowModule(true)}
+                >
+                  <PlusOutlined />
+                  新增
+                </Button>,
+                <Button
+                  key="edit-module"
+                  className={style.searchBtn}
+                  type="primary"
+                  onClick={() => updateMenu}
+                >
+                  <EditOutlined />
+                  修改
+                </Button>,
+                <Button key="export-mf3" className={style.searchBtn} type="primary">
+                  <EditOutlined />
+                  展开/折叠
+                </Button>,
+              ],
+            }}
+            rowSelection={{
+              type: 'checkbox',
+            }}
+            toolBarRender={false}
+            request={getMenuList}
+            columns={columns}
+          />
+        </BorderBox>
+        <AddModuleFunc />
+      </div>
+    </ConfigProvider>
   );
 };
 

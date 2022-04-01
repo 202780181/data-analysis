@@ -1,5 +1,30 @@
 @import '~antd/es/style/themes/default.less';
 
 .systemMenu {
-  margin-top: 10px;
+  padding-top: 10px;
+}
+.edit {
+  color: #fff;
+  background: #48d795;
+  border-color: #48d795;
+  &:hover {
+    color: #fff;
+    background: #6eeeae;
+    border-color: #6eeeae;
+  }
+}
+.searchBtn {
+  height: 32px;
+  margin-right: 8px;
+  border-radius: 10px;
+}
+.useTable {
+  :global(.ant-table-thead > tr > th) {
+    background: none;
+  }
+  :global(.ant-table-thead
+      > tr
+      > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before) {
+    width: 0;
+  }
 }
