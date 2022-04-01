@@ -12,13 +12,14 @@ type childrenProps = {
   cut?: number;
   actionRef?: React.Ref<ActionType | undefined>;
   autoHigh?: boolean;
+  margin?: Array<string>
 };
 type stateType = {
   width: string | number;
   height: string | number;
 };
 const BorderBox: FC<childrenProps> = (props) => {
-  const { title, children, autoHigh, cut = 0, actionRef: propsActionRef } = props;
+  const { title, children, autoHigh, cut = 0, actionRef: propsActionRef, margin = [] } = props;
   /** 通用的来操作子节点的工具类 */
   const actionRef = useRef<ActionType>();
   useImperativeHandle(propsActionRef, () => actionRef.current);
@@ -26,6 +27,8 @@ const BorderBox: FC<childrenProps> = (props) => {
     width: '',
     height: '',
   });
+
+  const marginString: string = margin.join(' ')
 
   const onResize = useCallback(() => {
     const dom = document.getElementsByClassName('ant-layout-content');
@@ -51,7 +54,7 @@ const BorderBox: FC<childrenProps> = (props) => {
   }, []);
 
   return (
-    <div className={style.cardBox} data-with={size.height} style={{ height: `${size.height}px` }}>
+    <div className={style.cardBox} data-with={size.height} style={{ height: `${size.height}px`, margin: `${marginString}` }}>
       {title && (
         <div className={style.title}>
           <div className={style.leftText}>

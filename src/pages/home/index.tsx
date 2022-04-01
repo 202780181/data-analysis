@@ -1,31 +1,51 @@
 import { FC, useState, useEffect, useRef } from 'react';
 import ProCard from '@ant-design/pro-card';
 import { RingProgress } from '@ant-design/charts';
+import { Button, Radio } from 'antd';
+import BorderBox from '@/components/BorderBox';
+
 import * as echarts from 'echarts';
 import type { HomeProps } from './data';
 import styles from './style.less';
-import { option, breakfastRing, LunchRing, dinnerRing } from './config';
+import { option, breakfastRing, LunchRing, dinnerRing, lineOption } from './config';
 
 
 
 
 const Home: FC<HomeProps> = () => {
   const [count] = useState(Math.random())
-  const chartRef: any = useRef(null)
+  const lineRef: any = useRef(null)
+  const merchantRef: any = useRef(null)
+  const posRef: any = useRef(null)
   let chartInstance: any = null
 
-  function renderChart() {
-    const renderedInstance = echarts.getInstanceByDom(chartRef.current)
+  // function renderChart() {
+  //   const renderedInstance = echarts.getInstanceByDom(chartRef.current)
+  //   if (renderedInstance) {
+  //     chartInstance = renderedInstance
+  //   } else {
+  //     chartInstance = echarts.init(chartRef.current)
+  //   }
+  //   chartInstance.setOption(option)
+  // }
+
+
+
+  const renderChart = (chart: HTMLDivElement | HTMLCanvasElement, option: object) => {
+    const renderedInstance = echarts.getInstanceByDom(chart)
     if (renderedInstance) {
       chartInstance = renderedInstance
     } else {
-      chartInstance = echarts.init(chartRef.current)
+      chartInstance = echarts.init(chart)
     }
     chartInstance.setOption(option)
   }
 
   useEffect(() => {
-    renderChart()
+    renderChart(lineRef.current, option)
+    renderChart(merchantRef.current, lineOption)
+    renderChart(posRef.current, lineOption)
+    // renderChart()
   }, [count]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -98,12 +118,43 @@ const Home: FC<HomeProps> = () => {
           </div>
         </div>
         <ProCard style={{ marginTop: 24 }} gutter={24} ghost>
-          <ProCard colSpan="62.7%" layout="center" bordered className={styles.shadow}>
-            <div style={{ width: "100%", height: "500px" }} ref={chartRef} />
+          <ProCard colSpan="62.7%" bordered className={styles.shadow}>
+            <div className={styles.leftHeader}>
+              <p className={styles.titleText}>
+                趋势
+              </p>
+              <div className={styles.btnArea}>
+                <Button type="primary" shape="round" >交易金额趋势</Button>
+                <Button shape="round" >餐均价趋势</Button>
+              </div>
+            </div>
+
+            <div className={styles.trendChange}>
+              <Radio.Group defaultValue="1" className={styles.radioGroup}>
+                <Radio.Button value="1">近一周</Radio.Button>
+                <Radio.Button value="2">近一月</Radio.Button>
+                <Radio.Button value="3">近半年</Radio.Button>
+              </Radio.Group>
+              <div className={styles.legand}>
+                <span className={styles.point1}>学生交易金额</span>
+                <span className={styles.point2}>教职工交易金额</span>
+                <span className={styles.point3}>校外人员交易金额</span>
+              </div>
+
+            </div>
+
+
+            <div style={{ width: "100%", height: "540px" }} ref={lineRef} />
           </ProCard>
-          <ProCard layout="center" bordered className={styles.shadow}>
-            右侧区域
-          </ProCard>
+          <div className={styles.right}>
+            <BorderBox title="最受欢迎商铺排行榜" autoHigh={false} margin={['0', '0', '24px', '0']}>
+              <div style={{ width: "100%", height: "280px" }} ref={merchantRef} />
+            </BorderBox>
+            <BorderBox title="POS利用率排行榜" autoHigh={false} >
+              <div style={{ width: "100%", height: "280px" }} ref={posRef} />
+            </BorderBox>
+          </div>
+
         </ProCard>
       </div>
 

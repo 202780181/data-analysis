@@ -1,35 +1,40 @@
-@import '~antd/es/style/themes/default.less';
-@primary-data-color: #5a7fd8;
+@import '~antd/es/style/themes/variable.less';
 
 .home {
-  .boxShadow-mixin(){
+  .boxShadow-mixin() {
     box-shadow: 0px 2px 20px 3px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 14px
   }
-  .header{
+
+  .header {
     .boxShadow-mixin();
     width: 100%;
     min-height: 218px;
     background: #FFF;
     margin-top: 20px;
-    .headerContent{
+
+    .headerContent {
       display: flex;
       justify-content: space-between;
       padding: 30px 35px;
-      .headerItem{
+
+      .headerItem {
         height: 120px;
         border-radius: 8px;
         color: #FFF;
         padding: 15px;
-        width: 18%;   
+        width: 18%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;  
-        .top{
+        justify-content: space-between;
+
+        .top {
           flex: 1;
           display: flex;
-          .amount{
+
+          .amount {
+            flex: 1;
             height: 42px;
             font-size: 30px;
             font-family: PingFangSC-Semibold, PingFang SC;
@@ -37,16 +42,21 @@
             color: #FFF;
             line-height: 42px;
             text-align: center;
+            display: block;
           }
-          .circle{
+
+          .circle {
             flex: 1;
             text-align: right;
           }
+
         }
-        .type{
+
+        .type {
           display: flex;
           justify-content: space-between;
-          span{
+
+          span {
             padding: 0 10px;
             line-height: 30px;
             border-radius: 15px;
@@ -55,32 +65,40 @@
           }
         }
       }
-      @media screen  and (max-width: 1500px){
-        .headerItem{
+
+      @media screen and (max-width: 1500px) {
+        .headerItem {
           padding: 15px 6px;
         }
       }
-      .purple{
+
+      .purple {
         background: linear-gradient(136deg, #8793F5 0%, #BCC4FE 100%);
       }
-      .orange{
+
+      .orange {
         background: linear-gradient(135deg, #FF8A86 0%, #F7C498 100%);
       }
-      .pink{
+
+      .pink {
         background: linear-gradient(135deg, #F6B2BF 0%, #A27AFC 100%);
       }
-      .green{
+
+      .green {
         background: linear-gradient(135deg, #44DEC5 0%, #4DBEF6 100%);
       }
-      .blue{
+
+      .blue {
         background: linear-gradient(135deg, #54BEF1 0%, #4384DE 100%);
       }
     }
   }
-  .shadow{
+
+  .shadow {
     .boxShadow-mixin();
   }
-  .titleText{
+
+  .titleText {
     position: relative;
     font-size: 14px;
     font-family: PingFangSC-Semibold, PingFang SC;
@@ -88,19 +106,21 @@
     color: #333;
     line-height: 20px;
     margin-left: 10px;
-    &::after{
+
+    &::after {
       content: '';
       position: absolute;
       left: -10px;
       top: 5px;
       width: 3px;
       height: 10px;
-      background: @primary-data-color;
+      background: @primary-color;
       border-radius: 6px;
     }
 
   }
-  .up{
+
+  .up {
     display: inline-block;
     width: 12px;
     height: 12px;
@@ -109,7 +129,8 @@
     background-position: center;
     margin-left: 10px;
   }
-  .down{
+
+  .down {
     display: inline-block;
     width: 12px;
     height: 12px;
@@ -119,5 +140,106 @@
     transform: rotate(180deg);
     margin-left: 10px;
 
+  }
+
+  :global {
+    .ant-pro-card-body {
+      padding: 0;
+    }
+  }
+
+  .leftHeader {
+    display: flex;
+    justify-content: space-between;
+
+    .btnArea {
+      border: 1px solid @primary-color;
+      border-radius: 32px;
+
+      :global {
+        .ant-btn {
+          z-index: 9;
+          border: none;
+        }
+
+        .ant-btn-default {
+          z-index: 1;
+          color: #999999;
+        }
+      }
+
+    }
+  }
+
+  .right {
+    flex: 1;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .trendChange {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 40px 70px 0;
+
+    // border-bottom: 1px solid rgba(153, 153, 153, 0.2);
+    .radioGroup {
+      :global {
+        .ant-radio-button-wrapper {
+          border: none;
+        }
+
+        .ant-radio-button-wrapper:not(:first-child)::before {
+          width: 0;
+        }
+
+        .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+          border-bottom: 1px solid @primary-color;
+        }
+
+        .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  .legand {
+    span {
+      position: relative;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #999999;
+      line-height: 32px;
+      margin-left: 48px;
+
+      &:first-of-type {
+        margin-left: 15px;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 8px;
+        width: 6px;
+        height: 6px;
+        border-radius: 3px;
+      }
+    }
+
+    .point1::before {
+      background: #949FF7;
+    }
+
+    .point2::before {
+      background: #EC8965;
+    }
+
+    .point3::before {
+      background: #FF6666;
+    }
   }
 }
