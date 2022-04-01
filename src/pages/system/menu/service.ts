@@ -25,3 +25,15 @@ export async function menuList(
     },
   });
 }
+
+/**
+ * 删除菜单
+ * @param menuId
+ */
+export async function deleteMenu(menuId: number) {
+  return request<{
+    data: API.ResultParams & {};
+  }>(`'/dev-api/system/menu/'${menuId}`, {
+    method: 'delete',
+  });
+}
