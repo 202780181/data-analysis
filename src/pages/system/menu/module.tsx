@@ -68,10 +68,6 @@ const AddModuleFunc: FC<{
     setType(dataSource?.[0]?.menuType || '');
   }, [dataSource]);
 
-  // 清除表单内容
-  // const clearSource = () => {
-  //   clearDataSource &&
-  // }
   return (
     <Modal
       width="700px"
@@ -83,7 +79,7 @@ const AddModuleFunc: FC<{
       onCancel={() => {
         cancel(false);
         setType('M');
-        clearDataSource();
+        clearDataSource([]);
       }}
     >
       <Form
